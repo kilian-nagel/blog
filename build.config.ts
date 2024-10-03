@@ -1,5 +1,3 @@
-import { cp } from 'node:fs/promises'
-
 import { defineBuildConfig } from 'unbuild'
 
 export default defineBuildConfig({
