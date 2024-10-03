@@ -1,0 +1,82 @@
+{
+  "name": "astro-antfu.me",
+  "type": "module",
+  "version": "0.0.0",
+  "packageManager": "pnpm@9.9.0",
+  "description": "Build beautiful, accessible, high-performance blog websites based on antfu.me with Astro",
+  "author": "Adrián UB",
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/adrian-ub",
+  "homepage": "https://github.com/adrian-ub/astro-antfu.me#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adrian-ub/astro-antfu.me.git"
+  },
+  "bugs": "https://github.com/adrian-ub/astro-antfu.me/issues",
+  "keywords": [],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs"
+    },
+    "./routes/*": "./dist/routes/*"
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "dev": "unbuild --stub",
+    "lint": "eslint .",
+    "prepublishOnly": "nr build",
+    "release": "bumpp && npm publish",
+    "start": "esno src/index.ts",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepare": "simple-git-hooks",
+    "playground": "nr -C playground dev",
+    "playground:build": "nr -C playground build"
+  },
+  "peerDependencies": {
+    "astro": "^4.15.0",
+    "unocss": "^0.63.2"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.3.2",
+    "@antfu/ni": "^0.23.0",
+    "@antfu/utils": "^0.7.10",
+    "@types/node": "^22.5.4",
+    "@unocss/eslint-plugin": "^0.63.2",
+    "astro": "^4.15.11",
+    "bumpp": "^9.5.2",
+    "eslint": "^9.9.1",
+    "eslint-plugin-astro": "^1.2.4",
+    "esno": "^4.7.0",
+    "lint-staged": "^15.2.10",
+    "pnpm": "^9.9.0",
+    "simple-git-hooks": "^2.11.1",
+    "typescript": "^5.5.4",
+    "unbuild": "^2.0.0",
+    "unocss": "^0.63.2",
+    "vite": "^5.4.3",
+    "vitest": "^2.0.5"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
+  }
+}
