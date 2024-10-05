@@ -13,7 +13,15 @@
     "url": "git+https://github.com/adrian-ub/astro-antfu.me.git"
   },
   "bugs": "https://github.com/adrian-ub/astro-antfu.me/issues",
-  "keywords": [],
+  "keywords": [
+    "withastro",
+    "astro",
+    "antfu",
+    "blog",
+    "website",
+    "portfolio",
+    "astro-integration"
+  ],
   "sideEffects": false,
   "exports": {
     ".": {
@@ -54,7 +62,7 @@
     "start": "esno src/index.ts",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
-    "prepare": "simple-git-hooks",
+    "prepare": "simple-git-hooks && pnpm astro sync",
     "playground": "nr -C playground dev",
     "playground:build": "nr -C playground build"
   },
