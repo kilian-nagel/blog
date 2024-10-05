@@ -1,0 +1,141 @@
+---
+import Logo from './Logo.astro'
+import ToggleTheme from './ToggleTheme.astro';
+---
+
+<header class="header z-40">
+  <a
+    class="absolute m-5 h-12 w-12 select-none outline-none xl:fixed"
+    href="/"
+    aria-label="Home"
+  >
+    <Logo />
+  </a>
+  <button
+    title="Scroll to top"
+    class="fixed bottom-3 right-3 z-100 h-10 w-10 rounded-full op0 transition duration-300 print:hidden hover-bg-hex-8883 hover:op100"
+  >
+    <div class="i-ri-arrow-up-line" />
+  </button>
+  <nav class="nav">
+    <div class="spacer" />
+    <div class="right print:op0">
+      <a href="/posts" title="Blog">
+        <span class="lt-md:hidden">Blog</span>
+        <div class="i-ri-article-line md:hidden" />
+      </a>
+      <a href="/projects" title="Projects">
+        <span class="lt-md:hidden">Projects</span>
+        <div class="i-ri-lightbulb-line md:hidden" />
+      </a>
+      <a href="/talks" class="lt-md:hidden" title="Talks">
+        Talks
+      </a>
+      <a href="/sponsors-list" title="Sponsors">
+        <span class="lt-md:hidden">Sponsors</span>
+        <div class="i-ri-heart-line md:hidden" />
+      </a>
+      <a href="/podcasts" class="lt-md:hidden" title="Podcasts">
+        <div class="i-ri-mic-line" />
+      </a>
+      <a href="/demos" title="Demos">
+        <div class="i-ri-screenshot-line" />
+      </a>
+      <a href="/chat" title="Let's Chat">
+        <div class="i-ri-chat-1-line" />
+      </a>
+      <a href="https://twitter.com/antfu7" target="_blank" title="Twitter" class="lt-md:hidden">
+        <div class="i-ri-twitter-x-fill" />
+      </a>
+      <a href="https://github.com/antfu" target="_blank" title="GitHub" class="lt-md:hidden">
+        <div class="i-uil-github-alt" />
+      </a>
+      <a href="/feed.xml" target="_blank" title="RSS" class="lt-md:hidden">
+        <div class="i-la-rss-square" style="font-size:1.25rem; margin: 0 -0.125rem;" />
+      </a>
+      <ToggleTheme />
+    </div>
+  </nav>
+</header>
+
+<style>
+.header h1 {
+  margin-bottom: 0;
+}
+
+.logo {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+}
+
+.nav {
+  padding: 2rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto max-content;
+  box-sizing: border-box;
+}
+
+.nav > * {
+  margin: auto;
+}
+
+.nav img {
+  margin-bottom: 0;
+}
+
+.nav a {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.2s ease;
+  opacity: 0.6;
+  outline: none;
+}
+
+.nav a:hover {
+  opacity: 1;
+  text-decoration-color: inherit;
+}
+
+.nav .right {
+  display: grid;
+  grid-gap: 1.2rem;
+  grid-auto-flow: column;
+}
+
+.nav .right > * {
+  margin: auto;
+}
+</style>
+
+<script>
+function toTop(): void {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  })
+}
+
+let scroll = 0
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('scroll', () => {
+    scroll = window.scrollY
+    const button = document.querySelector('button[title="Scroll to top"]')
+    if (button) {
+      button.classList.toggle('op30', scroll > 300)
+      button.classList.toggle('op0!', scroll <= 300)
+      button.classList.toggle('pointer-events-none', scroll <= 300)
+    }
+  })
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const button = document.querySelector('button[title="Scroll to top"]')
+    if (button) {
+      button.addEventListener('click', toTop)
+    }
+  })
+}
+</script>

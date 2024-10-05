@@ -4,10 +4,23 @@ export default function AntfuMeIntegration(): AstroIntegration {
   return {
     name: 'astro-antfu.me',
     hooks: {
-      'astro:config:setup': async ({ injectRoute }) => {
+      'astro:config:setup': async ({ injectRoute, updateConfig }) => {
         injectRoute({
-          pattern: '/',
-          entrypoint: 'astro-antfu.me/routes/Index.astro',
+          pattern: '/[...page]',
+          entrypoint: 'astro-antfu.me/routes/[...page].astro',
+        })
+
+        updateConfig({
+          markdown: {
+            shikiConfig: {
+              themes: {
+                dark: 'vitesse-dark',
+                light: 'vitesse-light',
+              },
+              defaultColor: false,
+              wrap: true,
+            },
+          },
         })
       },
     },

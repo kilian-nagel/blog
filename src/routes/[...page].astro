@@ -1,0 +1,37 @@
+---
+import type { GetStaticPaths } from 'astro'
+import { CollectionEntry, getCollection } from 'astro:content'
+
+import WrapperDemo from '../components/WrapperDemo.astro'
+import WrapperPost from '../components/WrapperPost.astro'
+import BaseLayout from '../layouts/BaseLayout.astro'
+
+export function slugToParam(slug: string): string | undefined {
+  return slug === 'index' || slug === ''
+    ? undefined
+    : slug.endsWith('/index')
+      ? slug.slice(0, -6)
+      : slug
+}
+
+export const getStaticPaths = (async () => {
+  const pages = await getCollection('pages')
+  return pages.map((page) => {
+        return {
+            params: { page: slugToParam(page.slug) },
+            props: { page },
+        }
+    })
+}) satisfies GetStaticPaths
+
+export type Props = { page: CollectionEntry<'pages'> }
+
+const { page } = Astro.props
+
+// crea una variable que diga si es demo o no con base en el slug
+const isDemo = page.slug.includes('/demo/')
+---
+
+<BaseLayout>
+  {isDemo ? <WrapperDemo /> : <WrapperPost {page} />}
+</BaseLayout>

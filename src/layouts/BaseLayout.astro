@@ -1,0 +1,59 @@
+---
+import { ViewTransitions } from 'astro:transitions'
+import BaseHead from '../components/BaseHead.astro'
+
+
+import Footer from '../components/Footer.astro'
+
+import NavBar from '../components/NavBar.astro'
+import '@unocss/reset/tailwind.css'
+import '../styles/main.css'
+import '../styles/prose.css'
+import '../styles/markdown.css'
+---
+
+<script is:inline>
+// eslint-disable-next-line ts/explicit-function-return-type
+function setDarkMode(document) {
+  const prefersDark
+    = window.matchMedia
+    && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('theme') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light')) {
+    document.documentElement.classList.toggle('dark', true)
+  }
+}
+
+setDarkMode(document)
+
+document.addEventListener('astro:before-swap', (ev) => {
+  setDarkMode(ev.newDocument)
+})
+</script>
+
+<html lang="en">
+<head>
+  <BaseHead />
+
+  <script>
+import nprogress from 'nprogress'
+
+document.addEventListener('astro:before-preparation', () => {
+  nprogress.start()
+})
+
+document.addEventListener('astro:page-load', () => {
+  nprogress.done()
+})
+</script>
+
+  <ViewTransitions />
+</head>
+<body class="relative text-gray-700 font-sans dark:text-gray-200">
+  <NavBar />
+  <main class="of-x-hidden px-7 py-10">
+    <slot />
+    <Footer />
+  </main>
+</body>
+</html>

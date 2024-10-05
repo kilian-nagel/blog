@@ -6,5 +6,6 @@ export default antfu(
     type: 'lib',
     astro: true,
     unocss: true,
+    markdown: true,
   },
 )

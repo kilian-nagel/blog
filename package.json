@@ -20,7 +20,16 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs"
     },
-    "./routes/*": "./dist/routes/*"
+    "./theme": {
+      "types": "./dist/theme.d.ts",
+      "import": "./dist/theme.mjs"
+    },
+    "./schema": {
+      "types": "./dist/schema.d.ts",
+      "import": "./dist/schema.mjs"
+    },
+    "./routes/*": "./dist/routes/*",
+    "./components/*": "./dist/components/*"
   },
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
@@ -50,14 +59,21 @@
     "playground:build": "nr -C playground build"
   },
   "peerDependencies": {
+    "@unocss/reset": "^0.63.2",
     "astro": "^4.15.0",
     "unocss": "^0.63.2"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.13",
+    "fast-glob": "^3.3.2",
+    "nprogress": "^0.2.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.3.2",
     "@antfu/ni": "^0.23.0",
     "@antfu/utils": "^0.7.10",
     "@types/node": "^22.5.4",
+    "@types/nprogress": "^0.2.3",
     "@unocss/eslint-plugin": "^0.63.2",
     "astro": "^4.15.11",
     "bumpp": "^9.5.2",
@@ -67,7 +83,7 @@
     "lint-staged": "^15.2.10",
     "pnpm": "^9.9.0",
     "simple-git-hooks": "^2.11.1",
-    "typescript": "^5.5.4",
+    "typescript": "5.5.4",
     "unbuild": "^2.0.0",
     "unocss": "^0.63.2",
     "vite": "^5.4.3",
