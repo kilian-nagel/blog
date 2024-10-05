@@ -3,7 +3,7 @@ import type { SchemaContext } from 'astro:content'
 import { z } from 'astro/zod'
 
 // eslint-disable-next-line ts/explicit-function-return-type
-function AntfuMePageFrontmatterSchema(context: SchemaContext) {
+function VitessePageFrontmatterSchema(context: SchemaContext) {
   return z.object({
     title: z.string(),
     display: z.string().optional(),
@@ -29,7 +29,7 @@ function AntfuMePageFrontmatterSchema(context: SchemaContext) {
   })
 }
 
-type DefaultSchema = ReturnType<typeof AntfuMePageFrontmatterSchema>
+type DefaultSchema = ReturnType<typeof VitessePageFrontmatterSchema>
 type BaseSchema = BaseSchemaWithoutEffects | z.ZodEffects<BaseSchemaWithoutEffects>
 
 type BaseSchemaWithoutEffects =
@@ -80,8 +80,8 @@ export function pagesSchema<T extends BaseSchema | never = never>(
 
     return (
       UserSchema
-        ? AntfuMePageFrontmatterSchema(context).and(UserSchema)
-        : AntfuMePageFrontmatterSchema(context)
+        ? VitessePageFrontmatterSchema(context).and(UserSchema)
+        : VitessePageFrontmatterSchema(context)
     ) as ExtendedSchema<T>
   }
 }

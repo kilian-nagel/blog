@@ -2,7 +2,7 @@ import type { AstroIntegration } from 'astro'
 
 import remarkGithubAlerts from 'remark-github-alerts'
 
-export default function AntfuMeIntegration(): AstroIntegration {
+export default function VitesseIntegration(): AstroIntegration {
   return {
     name: 'astro-vitesse',
     hooks: {
