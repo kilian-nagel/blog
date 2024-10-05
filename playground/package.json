@@ -15,10 +15,11 @@
     "@astrojs/mdx": "^3.1.7",
     "astro": "^4.15.11",
     "astro-vitesse": "workspace:*",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.2",
+    "unocss": "^0.63.3"
   },
   "devDependencies": {
     "@iconify/json": "^2.2.256",
-    "@unocss/reset": "^0.63.2"
+    "@unocss/reset": "^0.63.3"
   }
 }

@@ -6,7 +6,7 @@ export default function AntfuMeIntegration(): AstroIntegration {
     hooks: {
       'astro:config:setup': async ({ injectRoute, updateConfig }) => {
         injectRoute({
-          pattern: '/[...page]',
+          pattern: '[...page]',
           entrypoint: 'astro-vitesse/routes/[...page].astro',
         })
 

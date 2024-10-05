@@ -66,6 +66,7 @@
     "playground:build": "nr -C playground build"
   },
   "peerDependencies": {
+    "@iconify/json": "^2.2.256",
     "@unocss/reset": "^0.63.2",
     "astro": "^4.15.0",
     "unocss": "^0.63.2"
