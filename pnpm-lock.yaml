@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@iconify/json':
+        specifier: ^2.2.256
+        version: 2.2.256
       '@unocss/reset':
         specifier: ^0.63.2
         version: 0.63.3
