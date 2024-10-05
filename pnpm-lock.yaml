@@ -20,6 +20,9 @@ importers:
       nprogress:
         specifier: ^0.2.0
         version: 0.2.0
+      remark-github-alerts:
+        specifier: 0.1.0-beta.3
+        version: 0.1.0-beta.3(@types/mdast@4.0.4)(unified@11.0.5)
     devDependencies:
       '@antfu/eslint-config':
         specifier: ^3.3.2
@@ -3469,6 +3472,12 @@ packages:
 
   remark-gfm@4.0.0:
     resolution: {integrity: sha512-U92vJgBPkbw4Zfu/IiW2oTZLSL3Zpv+uI7My2eq8JxKgqraFdU8YUGicEJCEgSbeaG+QDFqIcwwfMTOEelPxuA==}
+
+  remark-github-alerts@0.1.0-beta.3:
+    resolution: {integrity: sha512-Sc74yr9DKX+fEIey462EUTtrrbzQ11EDfMawVTxRkqMxl4OMZUhLAuPFmbFYVvZMheYpmLEKqaf2fGlcbpQs1w==}
+    peerDependencies:
+      '@types/mdast': ^4.0.0
+      unified: ^11.0.0
 
   remark-mdx@3.0.1:
     resolution: {integrity: sha512-3Pz3yPQ5Rht2pM5R+0J2MrGoBSrzf+tJG94N+t/ilfdh8YLyyKYtidAYwTveB20BoHAcwIopOUqhcmh2F7hGYA==}
@@ -8359,6 +8368,12 @@ snapshots:
       unified: 11.0.5
     transitivePeerDependencies:
       - supports-color
+
+  remark-github-alerts@0.1.0-beta.3(@types/mdast@4.0.4)(unified@11.0.5):
+    dependencies:
+      '@types/mdast': 4.0.4
+      unified: 11.0.5
+      unist-util-visit: 5.0.0
 
   remark-mdx@3.0.1:
     dependencies:

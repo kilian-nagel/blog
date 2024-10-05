@@ -1,5 +1,7 @@
 import type { AstroIntegration } from 'astro'
 
+import remarkGithubAlerts from 'remark-github-alerts'
+
 export default function AntfuMeIntegration(): AstroIntegration {
   return {
     name: 'astro-vitesse',
@@ -20,6 +22,7 @@ export default function AntfuMeIntegration(): AstroIntegration {
               defaultColor: false,
               wrap: true,
             },
+            remarkPlugins: [remarkGithubAlerts],
           },
         })
       },
