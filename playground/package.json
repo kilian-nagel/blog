@@ -14,7 +14,7 @@
     "@astrojs/check": "^0.9.3",
     "@astrojs/mdx": "^3.1.7",
     "astro": "^4.15.11",
-    "astro-antfu.me": "workspace:*",
+    "astro-vitesse": "workspace:*",
     "typescript": "^5.6.2"
   },
   "devDependencies": {

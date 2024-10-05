@@ -1,3 +1,3 @@
-import { defineConfig } from 'astro-antfu.me/theme'
+import { defineConfig } from 'astro-vitesse/theme'
 
 export default defineConfig({})

@@ -2,12 +2,12 @@ import type { AstroIntegration } from 'astro'
 
 export default function AntfuMeIntegration(): AstroIntegration {
   return {
-    name: 'astro-antfu.me',
+    name: 'astro-vitesse',
     hooks: {
       'astro:config:setup': async ({ injectRoute, updateConfig }) => {
         injectRoute({
           pattern: '/[...page]',
-          entrypoint: 'astro-antfu.me/routes/[...page].astro',
+          entrypoint: 'astro-vitesse/routes/[...page].astro',
         })
 
         updateConfig({

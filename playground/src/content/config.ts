@@ -1,5 +1,5 @@
 import { defineCollection } from 'astro:content'
-import { pagesSchema } from 'astro-antfu.me/schema'
+import { pagesSchema } from 'astro-vitesse/schema'
 
 export const collections = {
   pages: defineCollection({

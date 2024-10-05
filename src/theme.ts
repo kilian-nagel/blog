@@ -14,7 +14,7 @@ export function defineConfig(config: UserConfig): UserConfig<object> {
   return mergeConfigs([{
     content: {
       inline: getInlineContentForPackage({
-        name: 'astro-antfu.me',
+        name: 'astro-vitesse',
         pattern: '/dist/**/*.{astro,js,mjs,jsx,ts,tsx}',
         root: process.cwd(),
       }),
