@@ -1,7 +1,7 @@
 {
   "name": "astro-vitesse",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "packageManager": "pnpm@9.9.0",
   "description": "Build beautiful, accessible, high-performance blog websites with Astro",
   "author": "Adrián UB",
