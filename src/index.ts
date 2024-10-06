@@ -10,7 +10,6 @@ import type { AstroIntegration } from 'astro'
 import type { PluginTranslations, VitesseUserConfigWithPlugins } from './utils/plugins'
 
 import mdx from '@astrojs/mdx'
-import remarkGithubAlerts from 'remark-github-alerts'
 import { vitesseSitemap } from './integrations/sitemap'
 import { vitePluginVitesseUserConfig } from './integrations/virtual-user-config'
 import { processI18nConfig } from './utils/i18n'
@@ -94,7 +93,6 @@ export default function VitesseIntegration({
             ],
           },
           markdown: {
-            remarkPlugins: [remarkGithubAlerts],
             shikiConfig: {
               themes: {
                 dark: 'vitesse-dark',
