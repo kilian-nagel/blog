@@ -61,17 +61,9 @@ export function builtinI18nSchema() {
 function vitesseI18nSchema() {
   return z
     .object({
-      'themeSelect.accessibleLabel': z
+      'toggleTheme.accessibleLabel': z
         .string()
         .describe('Accessible label for the theme selection dropdown.'),
-
-      'themeSelect.dark': z.string().describe('Name of the dark color theme.'),
-
-      'themeSelect.light': z.string().describe('Name of the light color theme.'),
-
-      'themeSelect.auto': z
-        .string()
-        .describe('Name of the automatic color theme that syncs with system preferences.'),
 
       'languageSelect.accessibleLabel': z
         .string()

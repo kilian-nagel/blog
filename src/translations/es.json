@@ -1,8 +1,5 @@
 {
-  "themeSelect.accessibleLabel": "Seleccionar tema",
-  "themeSelect.dark": "Oscuro",
-  "themeSelect.light": "Claro",
-  "themeSelect.auto": "Automático",
+  "toggleTheme.accessibleLabel": "Alternar combinación de colores",
   "languageSelect.accessibleLabel": "Seleccionar idioma",
   "i18n.untranslatedContent": "Esta página aún no está disponible en tu idioma.",
   "page.draft": "Este contenido es un borrador y no se incluirá en las versiones de producción.",
