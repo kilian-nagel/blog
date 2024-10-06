@@ -27,6 +27,7 @@
     "./theme": "./src/theme.ts",
     "./schema": "./src/schema.ts",
     "./locals": "./src/locals.ts",
+    "./props": "./src/props.ts",
     "./routes/*": "./src/routes/*",
     "./components/*": "./src/components/*"
   },
