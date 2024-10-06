@@ -7,7 +7,6 @@ import config from 'virtual:vitesse/user-config'
 
 import Head from '../components/Head.astro'
 import Header from './Header.astro'
-import WrapperDemo from './WrapperDemo.astro'
 import WrapperPost from './WrapperPost.astro'
 
 import '@unocss/reset/tailwind.css'
@@ -17,10 +16,6 @@ import '../styles/markdown.css'
 
 // Important that this is the last import so it can override built-in styles.
 import 'virtual:vitesse/user-css'
-
-const { slug } = Astro.props
-
-const isDemo = slug.includes('/demo/')
 ---
 
 <script is:inline>
@@ -62,7 +57,7 @@ const isDemo = slug.includes('/demo/')
     <Header {...Astro.props} />
 
     <main class="of-x-hidden px-7 py-10">
-      {isDemo ? <WrapperDemo {...Astro.props} /> : <WrapperPost {...Astro.props} />}
+      <WrapperPost {...Astro.props} />
 
       <div class="slide-enter prose m-auto mb-6 mt-10 flex animate-delay-1200!">
         <Footer />
