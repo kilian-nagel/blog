@@ -10,9 +10,9 @@ import 'i18next'
 
 declare module 'i18next' {
   interface CustomTypeOptions {
-    defaultNS: typeof import('./utils/createTranslationSystem').I18nextNamespace
+    defaultNS: typeof import('./utils/create-translation-system').I18nextNamespace
     resources: {
-      vitesse: Record<import('./utils/createTranslationSystem').I18nKeys, string>
+      vitesse: Record<import('./utils/create-translation-system').I18nKeys, string>
     }
   }
 }
