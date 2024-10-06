@@ -4,6 +4,8 @@ date: '2024-10-04'
 duration: 5min
 ---
 
+[[toc]]
+
 Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.
 
 ## Headings

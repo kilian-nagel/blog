@@ -11,7 +11,10 @@ import type { PluginTranslations, VitesseUserConfigWithPlugins } from './utils/p
 
 import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 import mdx from '@astrojs/mdx'
+import rehypeToc from '@microflash/rehype-toc'
+import { h } from 'hastscript'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+
 import { vitesseSitemap } from './integrations/sitemap'
 import { vitePluginVitesseUserConfig } from './integrations/virtual-user-config'
 import { processI18nConfig } from './utils/i18n'
@@ -97,6 +100,25 @@ export default function VitesseIntegration({
           markdown: {
             rehypePlugins: [
               rehypeHeadingIds,
+              [
+                rehypeToc,
+                {
+                  toc: (headings: { id: string, title: string, depth: number }[]) => {
+                    return h('section', [
+                      h('div.table-of-contents', [
+                        h('div.table-of-contents-anchor', [
+                          h('div.i-ri-menu-2-fill'),
+                        ]),
+                        h('ul', [
+                          ...headings.map(heading => h(`li`, [
+                            h('a', { href: `#${heading.id}` }, heading.title),
+                          ])),
+                        ]),
+                      ]),
+                    ])
+                  },
+                },
+              ],
               [
                 rehypeAutolinkHeadings,
                 {
