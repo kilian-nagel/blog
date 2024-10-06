@@ -45,9 +45,6 @@ importers:
       '@antfu/ni':
         specifier: ^0.23.0
         version: 0.23.0
-      '@antfu/utils':
-        specifier: ^0.7.10
-        version: 0.7.10
       '@types/node':
         specifier: ^22.5.4
         version: 22.7.4
@@ -69,9 +66,6 @@ importers:
       eslint-plugin-astro:
         specifier: ^1.2.4
         version: 1.2.4(eslint@9.11.1(jiti@2.2.1))(typescript@5.5.4)
-      esno:
-        specifier: ^4.7.0
-        version: 4.8.0
       lint-staged:
         specifier: ^15.2.10
         version: 15.2.10
@@ -1897,10 +1891,6 @@ packages:
     peerDependenciesMeta:
       jiti:
         optional: true
-
-  esno@4.8.0:
-    resolution: {integrity: sha512-acMtooReAQGzLU0zcuEDHa8S62meh5aIyi8jboYxyvAePdmuWx2Mpwmt0xjwO0bs9/SXf+dvXJ0QJoDWw814Iw==}
-    hasBin: true
 
   espree@10.2.0:
     resolution: {integrity: sha512-upbkBJbckcCNBDBDXEbuhjbP68n+scUd3k/U2EkyM9nw+I/jPiL4cLF/Al06CF96wRltFda16sxDFrxsI1v0/g==}
@@ -5927,10 +5917,6 @@ snapshots:
       jiti: 2.2.1
     transitivePeerDependencies:
       - supports-color
-
-  esno@4.8.0:
-    dependencies:
-      tsx: 4.19.1
 
   espree@10.2.0:
     dependencies:
