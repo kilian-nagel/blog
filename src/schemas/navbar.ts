@@ -7,6 +7,10 @@ const NavBarBaseSchema = z.object({
   label: z.string(),
   /** Translations of the `label` for each supported language. */
   translations: z.record(z.string()).default({}),
+  icon: z.string().optional(),
+  hideLabel: z.boolean().default(false),
+  labelClass: z.string().optional().default(''),
+  iconClass: z.string().optional().default(''),
 })
 
 // HTML attributes that can be added to an anchor element, validated as
