@@ -8,45 +8,45 @@ const { navBar } = Astro.props
 ---
 
 <nav class="nav">
-  <div class="spacer" />
+  <div class="spacer"></div>
   <div class="right print:op0">
-    {navBar.map(item => (
-      <a href={item.href} title={item.label} {...item.attrs}>
-        <span>{item.label}</span>
-      </a>
-    ))}
+    {
+      navBar.map((item) => (
+        <a href={item.href} title={item.label} {...item.attrs}>
+          <span>{item.label}</span>
+        </a>
+      ))
+    }
     <!-- <a href="/posts" title="Blog">
       <span class="lt-md:hidden">Blog</span>
       <div class="i-ri-article-line md:hidden" />
     </a> -->
     <a href="/projects" title="Projects">
       <span class="lt-md:hidden">Projects</span>
-      <div class="i-ri-lightbulb-line md:hidden" />
+      <div class="i-ri-lightbulb-line md:hidden"></div>
     </a>
-    <a href="/talks" class="lt-md:hidden" title="Talks">
-      Talks
-    </a>
+    <a href="/talks" class="lt-md:hidden" title="Talks"> Talks </a>
     <a href="/sponsors-list" title="Sponsors">
       <span class="lt-md:hidden">Sponsors</span>
-      <div class="i-ri-heart-line md:hidden" />
+      <div class="i-ri-heart-line md:hidden"></div>
     </a>
     <a href="/podcasts" class="lt-md:hidden" title="Podcasts">
-      <div class="i-ri-mic-line" />
+      <div class="i-ri-mic-line"></div>
     </a>
     <a href="/demos" title="Demos">
-      <div class="i-ri-screenshot-line" />
+      <div class="i-ri-screenshot-line"></div>
     </a>
     <a href="/chat" title="Let's Chat">
-      <div class="i-ri-chat-1-line" />
+      <div class="i-ri-chat-1-line"></div>
     </a>
     <a href="https://twitter.com/antfu7" target="_blank" title="Twitter" class="lt-md:hidden">
-      <div class="i-ri-twitter-x-fill" />
+      <div class="i-ri-twitter-x-fill"></div>
     </a>
     <a href="https://github.com/antfu" target="_blank" title="GitHub" class="lt-md:hidden">
-      <div class="i-uil-github-alt" />
+      <div class="i-uil-github-alt"></div>
     </a>
     <a href="/feed.xml" target="_blank" title="RSS" class="lt-md:hidden">
-      <div class="i-la-rss-square" style="font-size:1.25rem; margin: 0 -0.125rem;" />
+      <div class="i-la-rss-square" style="font-size:1.25rem; margin: 0 -0.125rem;"></div>
     </a>
     <ToggleTheme />
 

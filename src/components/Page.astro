@@ -29,9 +29,7 @@ const isDemo = slug.includes('/demo/')
 <script is:inline>
   // eslint-disable-next-line ts/explicit-function-return-type
   function setDarkMode(document) {
-    const prefersDark
-      = window.matchMedia
-      && window.matchMedia('(prefers-color-scheme: dark)').matches
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
     const setting = localStorage.getItem('theme') || 'auto'
     if (setting === 'dark' || (prefersDark && setting !== 'light')) {
       document.documentElement.classList.toggle('dark', true)
@@ -45,10 +43,7 @@ const isDemo = slug.includes('/demo/')
   })
 </script>
 
-<html
-  lang={Astro.props.lang}
-  dir={Astro.props.dir}
->
+<html lang={Astro.props.lang} dir={Astro.props.dir}>
   <head>
     <Head {...Astro.props} />
 
@@ -76,11 +71,17 @@ const isDemo = slug.includes('/demo/')
         <Footer />
       </div>
 
-      {config.credits && (
-        <div class="slide-enter prose m-auto mb-6 flex animate-delay-1500!">
-          <span class="text-sm op50"><a target="_blank" href="https://github.com/adrian-ub/astro-vitesse" style="color:inherit">{Astro.locals.t('builtWithVitesse.label')}</a></span>
-        </div>
-      )}
+      {
+        config.credits && (
+          <div class="slide-enter prose m-auto mb-6 flex animate-delay-1500!">
+            <span class="text-sm op50">
+              <a target="_blank" href="https://github.com/adrian-ub/astro-vitesse" style="color:inherit">
+                {Astro.locals.t('builtWithVitesse.label')}
+              </a>
+            </span>
+          </div>
+        )
+      }
     </main>
   </body>
 </html>

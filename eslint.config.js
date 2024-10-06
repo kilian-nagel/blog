@@ -7,5 +7,12 @@ export default antfu(
     astro: true,
     unocss: true,
     markdown: true,
+    formatters: {
+      astro: true,
+      css: true,
+      html: true,
+      markdown: true,
+      svg: true,
+    },
   },
 )

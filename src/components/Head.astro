@@ -61,8 +61,9 @@ if (description) {
 if (canonical && config.isMultilingual) {
   for (const locale in config.locales) {
     const localeOpts = config.locales[locale]
-    if (!localeOpts)
-continue
+
+    if (!localeOpts) continue
+
     headDefaults.push({
       tag: 'link',
       attrs: {
@@ -96,7 +97,7 @@ if (config.social?.twitter) {
   })
 }
 
-const head = createHead(headDefaults, config.head, data.head);
+const head = createHead(headDefaults, config.head, data.head)
 ---
 
 {head.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}

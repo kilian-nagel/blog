@@ -9,7 +9,7 @@ export async function getStaticPaths() {
   return paths
 }
 
-type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+type Props = InferGetStaticPropsType<typeof getStaticPaths>
 ---
 
 <CommonPage route={Astro.props} />

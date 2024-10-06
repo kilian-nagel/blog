@@ -9,9 +9,8 @@ export type Props = {
 
 const { route } = Astro.props
 
-// eslint-disable-next-line antfu/no-top-level-await
 const { Content, headings } = await route.entry.render()
-const routeData = generateRouteData({ props: { ...route, headings }, url: Astro.url });
+const routeData = generateRouteData({ props: { ...route, headings }, url: Astro.url })
 ---
 
 <Page {...routeData}><Content frontmatter={route.entry.data} /></Page>

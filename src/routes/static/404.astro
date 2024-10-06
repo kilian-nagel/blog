@@ -10,11 +10,9 @@ import CommonPage from '../common.astro'
 
 export const prerender = true
 
-const { lang = BuiltInDefaultLocale.lang, dir = BuiltInDefaultLocale.dir }
-  = config.defaultLocale || {}
+const { lang = BuiltInDefaultLocale.lang, dir = BuiltInDefaultLocale.dir } = config.defaultLocale || {}
 let locale = config.defaultLocale?.locale
-if (locale === 'root')
-locale = undefined
+if (locale === 'root') locale = undefined
 
 const entryMeta = { dir, lang, locale }
 const t = useTranslations(locale)
@@ -37,10 +35,9 @@ const fallbackEntry: VitessePagesEntry = {
   }),
 }
 
-// eslint-disable-next-line antfu/no-top-level-await
 const userEntry = await getEntry('pages', '404')
 const entry = userEntry || fallbackEntry
-const route: Route = { ...entryMeta, entryMeta, entry, id: entry.id, slug: entry.slug };
+const route: Route = { ...entryMeta, entryMeta, entry, id: entry.id, slug: entry.slug }
 ---
 
 <CommonPage {route} />

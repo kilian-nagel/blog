@@ -2,11 +2,9 @@
 import type { Props } from '../props'
 import { formatDate } from '../logics'
 
-const { entry: {
-  link,
-  date,
-  video,
-} } = Astro.props
+const {
+  entry: { link, date, video },
+} = Astro.props
 ---
 
 <div>
@@ -23,21 +21,11 @@ const { entry: {
     href={link}
     target="_blank"
   >
-    {video && (
-<video
-  src={video}
-  w-full
-  autoplay
-  loop
-  muted
-  playsinline
-  border="b base"
-/>
-)}
+    {video && <video src={video} w-full autoplay loop muted playsinline border="b base" />}
 
     <div class="prose prose-sm m0 p4 pb3">
       <slot />
-      <div op50 text-sm pt2>{ formatDate(date, false) }</div>
+      <div op50 text-sm pt2>{formatDate(date, false)}</div>
     </div>
   </a>
 </div>

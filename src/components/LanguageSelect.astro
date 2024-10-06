@@ -13,16 +13,18 @@ function localizedPathname(locale: string | undefined): string {
 
 {
   config.isMultilingual && (
-      <vitesse-lang-select>
-        <label>
-          <span class="sr-only">{Astro.locals.t('languageSelect.accessibleLabel')}</span>
-          <select class="px-2 op60 bg-base hover:op100">
-            {Object.entries(config.locales).map(([code, locale]) => (
-              <option value={localizedPathname(code)} selected={code === Astro.props.locale}>{locale.label}</option>
-            ))}
-          </select>
-        </label>
-      </vitesse-lang-select>
+    <vitesse-lang-select>
+      <label>
+        <span class="sr-only">{Astro.locals.t('languageSelect.accessibleLabel')}</span>
+        <select class="px-2 op60 bg-base hover:op100">
+          {Object.entries(config.locales).map(([code, locale]) => (
+            <option value={localizedPathname(code)} selected={code === Astro.props.locale}>
+              {locale.label}
+            </option>
+          ))}
+        </select>
+      </label>
+    </vitesse-lang-select>
   )
 }
 

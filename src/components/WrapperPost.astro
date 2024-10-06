@@ -9,85 +9,88 @@ import FallbackContentNotice from './FallbackContentNotice.astro'
 const { entry } = Astro.props
 const { data: frontmatter } = entry
 
-// eslint-disable-next-line antfu/no-top-level-await
 const { Content } = await entry.render()
 
 let tweetUrl = ''
+let elkUrl = ''
 
 if (config.social?.twitter) {
-  const twitterUser = new URL(config.social!.twitter!.url).pathname.slice(1)
+  const twitterUser = new URL(config.social.twitter.url).pathname.slice(1)
   tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`Reading @${twitterUser}\'s ${Astro.url}\n\nI think...`)}`
 }
 
-let elkUrl = ''
-
 if (config.social?.mastodon) {
-  const mastodonUser = new URL(config.social!.mastodon!.url).pathname.slice(1)
-  const host = new URL(config.social!.mastodon!.url).host
+  const urlMastodon = new URL(config.social.mastodon.url)
+  const mastodonUser = urlMastodon.pathname.slice(1)
+  const host = urlMastodon.host
 
   elkUrl = `https://elk.zone/intent/post?text=${encodeURIComponent(`Reading ${mastodonUser}@${host}\'s ${Astro.url}\n\nI think...`)}`
 }
 ---
 
-{(frontmatter.display ?? frontmatter.title) && (
-  <div class:list={['prose m-auto mb-8', frontmatter.wrapperClass]}>
-    <h1 class="mb-0 slide-enter-50">
-      {frontmatter.display ?? frontmatter.title}
-    </h1>
-    {frontmatter.date && (
-      <p class="opacity-50 slide-enter-50 !-mt-6">
-        {formatDate(frontmatter.date, false)} {frontmatter.duration && ` · ${frontmatter.duration}`}
-      </p>
-    )}
-    {frontmatter.place && (
-      <p class="mt--4!">
-        <span class="op50">at </span>
-        {frontmatter.placeLink
-? (
-          <a href={frontmatter.placeLink} target="_blank">
-            {frontmatter.place}
-          </a>
-        )
-: (
-          <span class="font-bold">
-            {frontmatter.place}
-          </span>
-        )}
-      </p>
-    )}
-    {frontmatter.subtitle && (
-      <p class="slide-enter italic opacity-50 !-mt-6">
-        {frontmatter.subtitle}
-      </p>
-    )}
-  </div>
-)}
-<article class:list={[frontmatter.tocAlwaysOn ? 'toc-always-on' : '', frontmatter.layoutFullWidth ? '' : 'prose m-auto slide-enter-content']}>
+{
+  (frontmatter.display ?? frontmatter.title) && (
+    <div class:list={['prose m-auto mb-8', frontmatter.wrapperClass]}>
+      <h1 class="mb-0 slide-enter-50">{frontmatter.display ?? frontmatter.title}</h1>
+      {frontmatter.date && (
+        <p class="opacity-50 slide-enter-50 !-mt-6">
+          {formatDate(frontmatter.date, false)} {frontmatter.duration && ` · ${frontmatter.duration}`}
+        </p>
+      )}
+      {frontmatter.place && (
+        <p class="mt--4!">
+          <span class="op50">at </span>
+          {frontmatter.placeLink ? (
+            <a href={frontmatter.placeLink} target="_blank">
+              {frontmatter.place}
+            </a>
+          ) : (
+            <span class="font-bold">{frontmatter.place}</span>
+          )}
+        </p>
+      )}
+      {frontmatter.subtitle && <p class="slide-enter italic opacity-50 !-mt-6">{frontmatter.subtitle}</p>}
+    </div>
+  )
+}
+<article
+  class:list={[
+    frontmatter.tocAlwaysOn ? 'toc-always-on' : '',
+    frontmatter.layoutFullWidth ? '' : 'prose m-auto slide-enter-content',
+  ]}
+>
   {Astro.props.entry.data.draft && <DraftContentNotice {...Astro.props} />}
   {Astro.props.isFallback && <FallbackContentNotice {...Astro.props} />}
   <Content />
 </article>
-{Astro.url.pathname !== '/' && (
-  <div class="prose slide-enter m-auto mb-8 mt-8 animate-delay-500 print:hidden">
-    {frontmatter.duration && (elkUrl || tweetUrl) && (
-      <>
-        <span class="font-mono op50">&gt; </span>
-        <span class="op50">{Astro.locals.t('comment.on')} </span>
-        {elkUrl && (<a href={elkUrl} target="_blank" class="op50">mastodon</a>)}
-        {(elkUrl && tweetUrl)
-        && (<span class="op25"> / </span>)}
-        {tweetUrl && (
-          <a href={tweetUrl} target="_blank" class="op50">twitter</a>
-        )}
-      </>
-    )}
-    <br />
-    <span class="font-mono op50">&gt; </span>
-    <a href={Astro.url.pathname.split('/').slice(0, -1).join('/') || '/'} class="font-mono op50 hover:op75">
-      cd ..
-    </a>
-  </div>
-)}
+{
+  Astro.url.pathname !== '/' && (
+    <div class="prose slide-enter m-auto mb-8 mt-8 animate-delay-500 print:hidden">
+      {frontmatter.duration && (elkUrl || tweetUrl) && (
+        <>
+          <span class="font-mono op50">&gt; </span>
+          <span class="op50">{Astro.locals.t('comment.on')} </span>
+          {elkUrl && (
+            <a href={elkUrl} target="_blank" class="op50">
+              mastodon
+            </a>
+          )}
+          {elkUrl && tweetUrl && <span class="op25"> / </span>}
+          {tweetUrl && (
+            <a href={tweetUrl} target="_blank" class="op50">
+              twitter
+            </a>
+          )}
+        </>
+      )}
+      <br />
+      <span class="font-mono op50">&gt; </span>
+      <a href={Astro.url.pathname.split('/').slice(0, -1).join('/') || '/'} class="font-mono op50 hover:op75">
+        cd ..
+      </a>
+    </div>
+  )
+}
 
 <script>
   function navigate(): true | undefined {
@@ -108,29 +111,30 @@ if (config.social?.mastodon) {
   function handleAnchors(event: any): void {
     const link = event.target.closest('a')
 
-    if (
-      !event.defaultPrevented
-      && link
-      && event.button === 0
-      && link.target !== '_blank'
-      && link.rel !== 'external'
-      && !link.download
-      && !event.metaKey
-      && !event.ctrlKey
-      && !event.shiftKey
-      && !event.altKey
-    ) {
-      const url = new URL(link.href)
-      if (url.origin !== window.location.origin)
-        return
+    const isLeftClick = event.button === 0
+    const isNotPrevented = !event.defaultPrevented
+    const isNotBlankTarget = link.target !== '_blank'
+    const isNotExternal = link.rel !== 'external'
+    const isNotDownload = !link.download
+    const isNoModifierKey = !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey
 
-      event.preventDefault()
-      const { pathname, hash } = url
-      if (hash && (!pathname || pathname === location.pathname)) {
-        window.history.replaceState({}, '', hash)
-        navigate()
-      }
-      else {
+    // This is so that the linter does not explode. issue: https://github.com/antfu/eslint-config/issues/525
+    if (link && isNotPrevented && isLeftClick && isNotBlankTarget) {
+      if (isNotExternal && isNotDownload && isNoModifierKey) {
+        const url = new URL(link.href)
+        if (url.origin !== window.location.origin) {
+          return
+        }
+
+        event.preventDefault()
+        const { pathname, hash } = url
+
+        if (hash && (!pathname || pathname === location.pathname)) {
+          window.history.replaceState({}, '', hash)
+          navigate()
+          return
+        }
+
         window.location.href = `${pathname}${hash}`
       }
     }
@@ -141,8 +145,9 @@ if (config.social?.mastodon) {
     document.addEventListener('click', handleAnchors, { passive: false })
 
     setTimeout(() => {
-      if (!navigate())
+      if (!navigate()) {
         setTimeout(navigate, 1000)
+      }
     }, 1)
   })
-  </script>
+</script>
