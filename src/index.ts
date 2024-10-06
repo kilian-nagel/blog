@@ -9,7 +9,9 @@
 import type { AstroIntegration } from 'astro'
 import type { PluginTranslations, VitesseUserConfigWithPlugins } from './utils/plugins'
 
+import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 import mdx from '@astrojs/mdx'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import { vitesseSitemap } from './integrations/sitemap'
 import { vitePluginVitesseUserConfig } from './integrations/virtual-user-config'
 import { processI18nConfig } from './utils/i18n'
@@ -93,6 +95,24 @@ export default function VitesseIntegration({
             ],
           },
           markdown: {
+            rehypePlugins: [
+              rehypeHeadingIds,
+              [
+                rehypeAutolinkHeadings,
+                {
+                  behavior: 'append',
+                  content: {
+                    type: 'text',
+                    value: '#',
+                  },
+                  properties: {
+                    ariaHidden: true,
+                    tabIndex: -1,
+                    className: 'header-anchor',
+                  },
+                },
+              ],
+            ],
             shikiConfig: {
               themes: {
                 dark: 'vitesse-dark',
