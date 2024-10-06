@@ -2,7 +2,6 @@
 title: 'Markdown Style Guide'
 date: '2024-10-04'
 duration: 5min
-draft: true
 ---
 
 Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.

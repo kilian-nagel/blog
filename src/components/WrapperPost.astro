@@ -1,23 +1,33 @@
 ---
-import { CollectionEntry } from 'astro:content'
+import type { Props } from '../props'
 
+import config from 'virtual:vitesse/user-config'
 import { formatDate } from '../logics'
+import DraftContentNotice from './DraftContentNotice.astro'
+import FallbackContentNotice from './FallbackContentNotice.astro'
 
-export type Props = {
-  page: CollectionEntry<'pages'>
-}
-
-const { data: frontmatter } = Astro.props.page
+const { entry } = Astro.props
+const { data: frontmatter } = entry
 
 // eslint-disable-next-line antfu/no-top-level-await
-const { Content } = await Astro.props.page.render()
+const { Content } = await entry.render()
 
-const base = 'https://antfu.me'
-const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`Reading @antfu7\'s ${base}${Astro.url.pathname}\n\nI think...`)}`
-const elkUrl = `https://elk.zone/intent/post?text=${encodeURIComponent(`Reading @antfu@m.webtoo.ls\'s ${base}${Astro.url.pathname}\n\nI think...`)}`;
+let tweetUrl = ''
+
+if (config.social?.twitter) {
+  const twitterUser = new URL(config.social!.twitter!.url).pathname.slice(1)
+  tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`Reading @${twitterUser}\'s ${Astro.url}\n\nI think...`)}`
+}
+
+let elkUrl = ''
+
+if (config.social?.mastodon) {
+  const mastodonUser = new URL(config.social!.mastodon!.url).pathname.slice(1)
+  const host = new URL(config.social!.mastodon!.url).host
+
+  elkUrl = `https://elk.zone/intent/post?text=${encodeURIComponent(`Reading ${mastodonUser}@${host}\'s ${Astro.url}\n\nI think...`)}`
+}
 ---
-
-
 
 {(frontmatter.display ?? frontmatter.title) && (
   <div class:list={['prose m-auto mb-8', frontmatter.wrapperClass]}>
@@ -50,25 +60,25 @@ const elkUrl = `https://elk.zone/intent/post?text=${encodeURIComponent(`Reading 
         {frontmatter.subtitle}
       </p>
     )}
-    {frontmatter.draft && (
-      <p class="slide-enter" style={{ backgroundColor: 'rgba(255, 165, 0, 0.1)', color: 'orange', borderLeft: '3px solid orange', padding: '4px 8px' }}>
-        This is a draft post, the content may be incomplete. Please check back later.
-      </p>
-    )}
   </div>
 )}
 <article class:list={[frontmatter.tocAlwaysOn ? 'toc-always-on' : '', frontmatter.layoutFullWidth ? '' : 'prose m-auto slide-enter-content']}>
+  {Astro.props.entry.data.draft && <DraftContentNotice {...Astro.props} />}
+  {Astro.props.isFallback && <FallbackContentNotice {...Astro.props} />}
   <Content />
 </article>
 {Astro.url.pathname !== '/' && (
   <div class="prose slide-enter m-auto mb-8 mt-8 animate-delay-500 print:hidden">
-    {frontmatter.duration && (
+    {frontmatter.duration && (elkUrl || tweetUrl) && (
       <>
         <span class="font-mono op50">&gt; </span>
-        <span class="op50">comment on </span>
-        <a href={elkUrl} target="_blank" class="op50">mastodon</a>
-        <span class="op25"> / </span>
-        <a href={tweetUrl} target="_blank" class="op50">twitter</a>
+        <span class="op50">{Astro.locals.t('comment.on')} </span>
+        {elkUrl && (<a href={elkUrl} target="_blank" class="op50">mastodon</a>)}
+        {(elkUrl && tweetUrl)
+        && (<span class="op25"> / </span>)}
+        {tweetUrl && (
+          <a href={tweetUrl} target="_blank" class="op50">twitter</a>
+        )}
       </>
     )}
     <br />

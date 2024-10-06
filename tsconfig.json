@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "lib": ["ESNext"],
+    "lib": [
+      "ESNext"
+    ],
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
@@ -12,5 +14,7 @@
     "skipDefaultLibCheck": true,
     "skipLibCheck": true
   },
-  "exclude": ["playground"]
+  "exclude": [
+    "playground"
+  ]
 }

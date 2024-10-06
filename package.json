@@ -23,42 +23,21 @@
   ],
   "sideEffects": false,
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs"
-    },
-    "./theme": {
-      "types": "./dist/theme.d.ts",
-      "import": "./dist/theme.mjs"
-    },
-    "./schema": {
-      "types": "./dist/schema.d.ts",
-      "import": "./dist/schema.mjs"
-    },
-    "./routes/*": "./dist/routes/*",
-    "./components/*": "./dist/components/*"
+    ".": "./src/index.ts",
+    "./theme": "./src/theme.ts",
+    "./schema": "./src/schema.ts",
+    "./locals": "./src/locals.ts",
+    "./routes/*": "./src/routes/*",
+    "./components/*": "./src/components/*"
   },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./dist/*",
-        "./dist/index.d.ts"
-      ]
-    }
-  },
+  "main": "./src/index.ts",
+  "types": "./src/types.ts",
   "files": [
-    "dist"
+    "src"
   ],
   "scripts": {
-    "build": "unbuild",
-    "dev": "unbuild --stub",
     "lint": "eslint .",
-    "prepublishOnly": "nr build",
     "release": "bumpp && npm publish",
-    "start": "esno src/index.ts",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
     "prepare": "simple-git-hooks && pnpm astro sync",
@@ -72,8 +51,12 @@
     "unocss": "^0.63.2"
   },
   "dependencies": {
+    "@astrojs/mdx": "^3.1.7",
+    "@astrojs/sitemap": "^3.2.0",
+    "bcp-47": "^2.1.0",
     "dayjs": "^1.11.13",
     "fast-glob": "^3.3.2",
+    "i18next": "^23.15.2",
     "nprogress": "^0.2.0",
     "remark-github-alerts": "0.1.0-beta.3"
   },
@@ -93,7 +76,6 @@
     "pnpm": "^9.9.0",
     "simple-git-hooks": "^2.11.1",
     "typescript": "5.5.4",
-    "unbuild": "^2.0.0",
     "unocss": "^0.63.2",
     "vite": "^5.4.3",
     "vitest": "^2.0.5"

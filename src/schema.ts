@@ -1,6 +1,7 @@
 import type { SchemaContext } from 'astro:content'
 
 import { z } from 'astro/zod'
+import { HeadConfigSchema } from './schemas/head'
 
 // eslint-disable-next-line ts/explicit-function-return-type
 function VitessePageFrontmatterSchema(context: SchemaContext) {
@@ -26,6 +27,8 @@ function VitessePageFrontmatterSchema(context: SchemaContext) {
     radio: z.boolean().optional().default(false),
     video: z.boolean().optional().default(false),
     path: z.string().url().optional(),
+    /** Set custom `<head>` tags just for this page. */
+    head: HeadConfigSchema(),
   })
 }
 
