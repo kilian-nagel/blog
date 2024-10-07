@@ -24,6 +24,7 @@ export interface Link {
   hideLabel: boolean
   labelClass: string
   iconClass: string
+  wrapperClass: string
 }
 
 export type NavBarEntry = Link
@@ -52,12 +53,13 @@ function makeLink({
   icon?: string
   labelClass: string
   iconClass: string
+  wrapperClass: string
 }): Link {
   return { ...opts, isCurrent, hideLabel, attrs }
 }
 
 /** Process sidebar link options to create a link entry. */
-function makeNavBarLink({ currentPathname, href, label, attrs, hideLabel, icon, iconClass, labelClass }: {
+function makeNavBarLink({ currentPathname, href, label, attrs, hideLabel, icon, iconClass, labelClass, wrapperClass }: {
   href: string
   label: string
   currentPathname: string
@@ -66,12 +68,13 @@ function makeNavBarLink({ currentPathname, href, label, attrs, hideLabel, icon, 
   icon?: string
   labelClass: string
   iconClass: string
+  wrapperClass: string
 }): Link {
   if (!isAbsolute(href)) {
     href = formatPath(href)
   }
   const isCurrent = pathsMatch(encodeURI(href), currentPathname)
-  return makeLink({ label, href, isCurrent, attrs, hideLabel, icon, iconClass, labelClass })
+  return makeLink({ label, href, isCurrent, attrs, hideLabel, icon, iconClass, labelClass, wrapperClass })
 }
 
 /** Create a link entry from a manual link item in user config. */
@@ -98,6 +101,7 @@ function linkFromNavBarLinkItem(
       icon: item.icon,
       labelClass: item.labelClass,
       iconClass: item.iconClass,
+      wrapperClass: item.wrapperClass,
     },
   )
 }
@@ -139,6 +143,7 @@ function linkFromInternalNavBarLinkItem(
     icon: item.icon,
     labelClass: item.labelClass,
     iconClass: item.iconClass,
+    wrapperClass: item.wrapperClass,
   })
 }
 

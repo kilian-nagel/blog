@@ -53,7 +53,7 @@ export default defineConfig({
       }, {
         label: 'Talks',
         slug: 'talks',
-        labelClass: 'lt-md:hidden',
+        wrapperClass: 'lt-md:hidden',
       }, {
         label: 'Sponsors',
         slug: 'sponsors-list',
@@ -65,7 +65,7 @@ export default defineConfig({
         slug: 'podcasts',
         icon: 'i-ri-mic-line',
         hideLabel: true,
-        labelClass: 'lt-md:hidden',
+        wrapperClass: 'lt-md:hidden',
       },
       // {
       //   label: 'Demos',
@@ -84,7 +84,7 @@ export default defineConfig({
         link: 'https://twitter.com/adrianub',
         hideLabel: true,
         icon: 'i-ri-twitter-x-fill',
-        iconClass: 'lt-md:hidden',
+        wrapperClass: 'lt-md:hidden',
         attrs: {
           target: '_blank',
           rel: 'noopener',
@@ -94,7 +94,7 @@ export default defineConfig({
         link: 'https://github.com/adrian-ub/astro-vitesse',
         hideLabel: true,
         icon: 'i-uil-github-alt',
-        iconClass: 'lt-md:hidden',
+        wrapperClass: 'lt-md:hidden',
         attrs: {
           target: '_blank',
           rel: 'noopener',
@@ -104,7 +104,7 @@ export default defineConfig({
         link: '/feed.xml',
         hideLabel: true,
         icon: 'i-la-rss-square',
-        iconClass: 'lt-md:hidden',
+        wrapperClass: 'lt-md:hidden',
         attrs: {
           target: '_blank',
           rel: 'noopener',

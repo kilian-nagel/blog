@@ -12,7 +12,7 @@ const { navBar } = Astro.props
   <div class="right print:op0">
     {
       navBar.map((item) => (
-        <a href={item.href} title={item.label} {...item.attrs}>
+        <a href={item.href} title={item.label} class={item.wrapperClass} {...item.attrs}>
           {!item.hideLabel && <span class={item.labelClass}>{item.label}</span>}
           {item.icon && <div class:list={[item.icon, item.iconClass]} />}
         </a>

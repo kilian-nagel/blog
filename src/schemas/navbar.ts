@@ -11,6 +11,7 @@ const NavBarBaseSchema = z.object({
   hideLabel: z.boolean().default(false),
   labelClass: z.string().optional().default(''),
   iconClass: z.string().optional().default(''),
+  wrapperClass: z.string().optional().default(''),
 })
 
 // HTML attributes that can be added to an anchor element, validated as
