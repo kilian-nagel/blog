@@ -113,10 +113,4 @@ export default defineConfig({
       }],
     }),
   ],
-  vite: {
-    ssr: {
-      // This is only necessary when doing integration development.
-      external: ['astro-vitesse'],
-    },
-  },
 })
