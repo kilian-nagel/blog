@@ -1,20 +1,26 @@
 ---
-const inactiveStyle = 'opacity-20 hover:opacity-50'
-const activeStyle = 'opacity-100 underline'
+import { getSubNavbarFromConfig } from '../utils/navigation'
+import { slugToLocaleData, urlToSlug } from '../utils/slugs'
+import config from 'virtual:vitesse/user-config'
 
-const currentPath = Astro.url.pathname
+const url = Astro.url
+const slug = urlToSlug(url)
+const localeData = slugToLocaleData(slug)
+const subNavBar = getSubNavbarFromConfig(config.subNavBar, url.pathname, localeData.locale)
 ---
 
 <div class="prose m-auto mb-8 select-none animate-none! op100!">
   <div mb-0 flex="~ col gap-1 sm:row sm:gap-3 wrap" text-3xl>
-    <a href="/posts" class:list={['!border-none', currentPath === '/posts' ? activeStyle : inactiveStyle]}> Blog </a>
-    <a href="/talks" class:list={['!border-none', currentPath === '/talks' ? activeStyle : inactiveStyle]}> Talks </a>
-    <a href="/podcasts" class:list={['!border-none', currentPath === '/podcasts' ? activeStyle : inactiveStyle]}>
-      Podcasts
-    </a>
-    <a href="/streams" class:list={['!border-none', currentPath === '/streams' ? activeStyle : inactiveStyle]}>
-      Streams
-    </a>
-    <a href="/notes" class:list={['!border-none', currentPath === '/notes' ? activeStyle : inactiveStyle]}> Notes </a>
+    {
+      subNavBar.map((subNavLink) => (
+        <a
+          href={subNavLink.href}
+          class:list={['!border-none', subNavLink.isCurrent ? 'opacity-100 underline' : 'opacity-20 hover:opacity-50']}
+          {...subNavLink.attrs}
+        >
+          {subNavLink.label}
+        </a>
+      ))
+    }
   </div>
 </div>

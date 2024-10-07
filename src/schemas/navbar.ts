@@ -7,6 +7,9 @@ const NavBarBaseSchema = z.object({
   label: z.string(),
   /** Translations of the `label` for each supported language. */
   translations: z.record(z.string()).default({}),
+})
+
+const NavBarWithIconSchema = NavBarBaseSchema.extend({
   icon: z.string().optional(),
   hideLabel: z.boolean().default(false),
   labelClass: z.string().optional().default(''),
@@ -24,7 +27,7 @@ export type LinkHTMLAttributes = z.infer<typeof linkHTMLAttributesSchema>
 
 export const NavBarLinkItemHTMLAttributesSchema = (): z.ZodDefault<typeof linkHTMLAttributesSchema> => linkHTMLAttributesSchema.default({})
 
-const NavBarLinkItemSchema = NavBarBaseSchema.extend({
+const NavBarLinkItemSchema = NavBarWithIconSchema.extend({
   /** The link to this item’s content. Can be a relative link to local files or the full URL of an external page. */
   link: z.string(),
   /** HTML attributes to add to the link item. */
@@ -32,7 +35,7 @@ const NavBarLinkItemSchema = NavBarBaseSchema.extend({
 }).strict()
 export type SidebarLinkItem = z.infer<typeof NavBarLinkItemSchema>
 
-const InternalNavBarLinkItemSchema = NavBarBaseSchema.partial({ label: true }).extend({
+const InternalNavBarLinkItemSchema = NavBarWithIconSchema.extend({
   /** The link to this item’s content. Must be a slug of a Content Collection entry. */
   slug: z.string(),
   /** HTML attributes to add to the link item. */
@@ -49,3 +52,11 @@ export const NavBarItemSchema = z.union([
   InternalNavBarLinkItemShorthandSchema,
 ])
 export type NavBarItem = z.infer<typeof NavBarItemSchema>
+
+export const SubNavBarItemSchema = NavBarBaseSchema.extend({
+  /** The link to this item’s content. Must be a slug of a Content Collection entry. */
+  slug: z.string(),
+  /** HTML attributes to add to the link item. */
+  attrs: NavBarLinkItemHTMLAttributesSchema(),
+})
+export type SubNavBarItem = z.infer<typeof SubNavBarItemSchema>

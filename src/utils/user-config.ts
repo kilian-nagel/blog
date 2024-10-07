@@ -5,7 +5,7 @@ import { ComponentConfigSchema } from '../schemas/components'
 import { FaviconSchema } from '../schemas/favicon'
 import { HeadConfigSchema } from '../schemas/head'
 import { LogoConfigSchema } from '../schemas/logo'
-import { NavBarItemSchema } from '../schemas/navbar'
+import { NavBarItemSchema, SubNavBarItemSchema } from '../schemas/navbar'
 import { TitleConfigSchema, TitleTransformConfigSchema } from '../schemas/site-title'
 import { SocialLinksSchema } from '../schemas/social'
 import { BuiltInDefaultLocale } from './i18n'
@@ -158,6 +158,7 @@ const UserConfigSchema = z.object({
 
   /** Configure your site’s sidebar navigation items. */
   navBar: NavBarItemSchema.array().optional(),
+  subNavBar: SubNavBarItemSchema.array().optional(),
 })
 
 export const VitesseConfigSchema = UserConfigSchema.strict()

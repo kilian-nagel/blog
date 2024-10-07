@@ -111,6 +111,28 @@ export default defineConfig({
           style: 'font-size:1.25rem; margin: 0 -0.125rem;',
         },
       }],
+      subNavBar: [
+        {
+          label: 'Blog',
+          slug: 'posts',
+        },
+        {
+          label: 'Talks',
+          slug: 'talks',
+        },
+        {
+          label: 'Podcasts',
+          slug: 'podcasts',
+        },
+        {
+          label: 'Streams',
+          slug: 'streams',
+        },
+        {
+          label: 'Notes',
+          slug: 'notes',
+        },
+      ],
     }),
   ],
 })
