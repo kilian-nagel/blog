@@ -1,36 +1,71 @@
 ---
-import { CollectionEntry, getCollection } from 'astro:content'
+import { CollectionEntry } from 'astro:content'
 import { formatDate } from '../logics'
+import { slugToLocaleData } from '../utils/slugs'
+import { ensureLeadingSlash, stripLeadingSlash } from '../utils/path'
+import { getLocaleRoutes, Route, VitessePagesEntry } from '../utils/routing'
+import { generateVitessePageRouteData } from '../utils/vitesse-page'
 
 export interface Props {
   startsWith?: string
-  posts?: CollectionEntry<'pages'>['data'][]
+  items?: CollectionEntry<'pages'>['data'][]
 }
 
-const { startsWith = 'posts/', posts: postsProps } = Astro.props
+let { startsWith = 'posts/', items: pagesProps } = Astro.props
 
-let pages: CollectionEntry<'pages'>['data'][] = []
+let pagesCollection: Route[] = []
 
-if (!postsProps?.length) {
-  pages = (
-    await getCollection('pages', (page) => {
-      return page.slug.startsWith(startsWith)
-    })
-  ).map((page) => ({ ...page.data, path: page.data.path ?? page.data.redirect ?? page.slug }))
+const localeData = slugToLocaleData(stripLeadingSlash(Astro.url.pathname))
+if (!pagesProps?.length) {
+  const routes = getLocaleRoutes(localeData.locale).filter((route) =>
+    route.slug.startsWith((localeData.locale ? localeData.locale + '/' : '') + startsWith),
+  )
+  pagesCollection = routes
 }
 
-const posts: CollectionEntry<'pages'>['data'] = [...(postsProps || pages)].sort(
-  (a, b) => +new Date(b.date!) - +new Date(a.date!),
-)
+const newPagePros = [...(pagesProps || [])].map(async (page) => {
+  const { entry, slug, id, entryMeta, dir, lang, locale } = await generateVitessePageRouteData({
+    url: Astro.url,
+    props: {
+      frontmatter: page,
+      lang: localeData.locale,
+    },
+  })
+
+  return {
+    entry,
+    slug,
+    id,
+    entryMeta,
+    dir,
+    lang,
+    locale,
+  }
+})
+
+pagesProps = await Promise.all(newPagePros)
+
+const pages: Route[] = [...((pagesProps.length ? pagesProps : null) || pagesCollection)]
+  .sort((a, b) => +new Date(b.entry.data.date!) - +new Date(a.entry.data.date!))
+  .map((page) => ({
+    ...page,
+    entry: {
+      ...page.entry,
+      data: {
+        ...page.entry.data,
+        path: page.entry.data.path ?? page.entry.data.redirect ?? ensureLeadingSlash(page.slug),
+      },
+    },
+  }))
 
 const getYear = (a: Date | string | number) => new Date(a).getFullYear()
 const isFuture = (a?: Date | string | number) => a && new Date(a) > new Date()
 const isSameYear = (a?: Date | string | number, b?: Date | string | number) => a && b && getYear(a) === getYear(b)
-function isSameGroup(a: CollectionEntry<'pages'>['data'], b?: CollectionEntry<'pages'>['data']) {
+function isSameGroup(a: VitessePagesEntry, b?: VitessePagesEntry) {
   return isFuture(a.date) === isFuture(b?.date) && isSameYear(a.date, b?.date)
 }
 
-function getGroupName(p: CollectionEntry<'pages'>['data']) {
+function getGroupName(p: VitessePagesEntry) {
   if (isFuture(p.date)) return 'Upcoming'
   return getYear(p.date!)
 }
@@ -38,7 +73,7 @@ function getGroupName(p: CollectionEntry<'pages'>['data']) {
 
 <ul>
   {
-    !posts.length && (
+    !pages.length && (
       <div py2 op50>
         {'{ nothing here yet }'}
       </div>
@@ -46,9 +81,9 @@ function getGroupName(p: CollectionEntry<'pages'>['data']) {
   }
 
   {
-    posts.map((route, idx) => (
+    pages.map(({ entry: { data }, isFallback, entryMeta }, idx) => (
       <>
-        {!isSameGroup(route, pages[idx - 1]) && (
+        {!isSameGroup(data, pages[idx - 1]?.entry.data) && (
           <div
             select-none
             relative
@@ -71,7 +106,7 @@ function getGroupName(p: CollectionEntry<'pages'>['data']) {
               text-stroke-hex-aaa
               op10
             >
-              {getGroupName(route)}
+              {getGroupName(data)}
             </span>
           </div>
         )}
@@ -83,54 +118,74 @@ function getGroupName(p: CollectionEntry<'pages'>['data']) {
           }}
         >
           <a
-            href={route.path}
-            class="item mb-6 mt-2 block font-normal no-underline"
+            href={data.path}
+            class="item block font-normal mb-6 mt-2 no-underline"
             {...{
-              target: route.path.startsWith('http') ? '_blank' : undefined,
-              rel: route.path.startsWith('http') ? 'noopener noreferrer' : undefined,
+              target: data.path.startsWith('http') ? '_blank' : undefined,
+              rel: data.path.startsWith('http') ? 'noopener noreferrer' : undefined,
             }}
           >
             <li class="no-underline" flex="~ col md:row gap-2 md:items-center">
               <div class="title text-lg leading-1.2em" flex="~ gap-2 wrap">
-                <span align-middle>{route.title}</span>
-                {route.redirect && (
+                {isFallback && (
+                  <span
+                    align-middle
+                    flex-none
+                    class="text-xs bg-zinc:15 text-zinc5 rounded px-1 py-0.5 ml--12 mr2 my-auto hidden md:block"
+                  >
+                    {entryMeta.lang}
+                  </span>
+                )}
+
+                <span align-middle>{data.title}</span>
+
+                {data.redirect && (
                   <span align-middle op50 flex-none text-xs ml--1.5 i-carbon-arrow-up-right title="External" />
                 )}
               </div>
 
               <div flex="~ gap-2 items-center">
-                {route.inperson && <span align-middle op50 flex-none i-ri:group-2-line title="In person" />}
-                {(route.recording || route.video) && (
+                {data.inperson && <span align-middle op50 flex-none i-ri:group-2-line title="In person" />}
+                {(data.recording || data.video) && (
                   <span align-middle op50 flex-none i-ri:film-line title="Provided in video" />
                 )}
-                {route.radio && <span align-middle op50 flex-none i-ri:radio-line title="Provided in radio" />}
-
+                {data.radio && <span align-middle op50 flex-none i-ri:radio-line title="Provided in radio" />}
                 <span text-sm op50 ws-nowrap>
-                  {formatDate(route.date!, true)}
+                  {formatDate(data.date!, true)}
                 </span>
-                {route.duration && (
+                {data.duration && (
                   <span text-sm op40 ws-nowrap>
                     {' '}
-                    · {route.duration}
+                    · {data.duration}
                   </span>
                 )}
-                {route.platform && (
+                {data.platform && (
                   <span text-sm op40 ws-nowrap>
                     {' '}
-                    · {route.platform}
+                    · {data.platform}
                   </span>
                 )}
-                {route.place && (
+                {data.place && (
                   <span text-sm op40 ws-nowrap md:hidden>
                     {' '}
-                    · {route.place}
+                    · {data.place}
+                  </span>
+                )}
+
+                {isFallback && (
+                  <span
+                    align-middle
+                    flex-none
+                    class="text-xs bg-zinc:15 text-zinc5 rounded px-1 py-0.5 my-auto md:hidden"
+                  >
+                    {entryMeta.lang}
                   </span>
                 )}
               </div>
             </li>
-            {route.place && (
+            {data.place && (
               <div op50 text-sm hidden mt--2 md:block>
-                {route.place}
+                {data.place}
               </div>
             )}
           </a>
