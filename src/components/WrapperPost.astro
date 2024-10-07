@@ -9,8 +9,6 @@ import FallbackContentNotice from './FallbackContentNotice.astro'
 const { entry } = Astro.props
 const { data: frontmatter } = entry
 
-const { Content } = await entry.render()
-
 let tweetUrl = ''
 let elkUrl = ''
 
@@ -61,7 +59,7 @@ if (config.social?.mastodon) {
 >
   {Astro.props.entry.data.draft && <DraftContentNotice {...Astro.props} />}
   {Astro.props.isFallback && <FallbackContentNotice {...Astro.props} />}
-  <Content />
+  <slot />
 </article>
 {
   Astro.url.pathname !== '/' && (
