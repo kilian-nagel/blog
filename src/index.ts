@@ -1,6 +1,6 @@
 /**
  * These triple-slash directives defines dependencies to various declaration files that will be
- * loaded when a user imports the Starlight integration in their Astro configuration file. These
+ * loaded when a user imports the Vitesse integration in their Astro configuration file. These
  * directives must be first at the top of the file and can only be preceded by this comment.
  */
 /// <reference path="./locals.d.ts" />
@@ -84,10 +84,10 @@ export default function VitesseIntegration({
           integrations.push(mdx({ optimize: true }))
         }
 
-        // Add integrations immediately after Starlight in the config array.
-        // e.g. if a user has `integrations: [starlight(), tailwind()]`, then the order will be
-        // `[starlight(), expressiveCode(), sitemap(), mdx(), tailwind()]`.
-        // This ensures users can add integrations before/after Starlight and we respect that order.
+        // Add integrations immediately after Vitesse in the config array.
+        // e.g. if a user has `integrations: [vitesse(), tailwind()]`, then the order will be
+        // `[vitesse(), expressiveCode(), sitemap(), mdx(), tailwind()]`.
+        // This ensures users can add integrations before/after Vitesse and we respect that order.
         const selfIndex = config.integrations.findIndex(i => i.name === 'astro-vitesse')
         config.integrations.splice(selfIndex + 1, 0, ...integrations)
 

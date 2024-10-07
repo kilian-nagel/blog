@@ -29,7 +29,7 @@ function localizedPathname(locale: string | undefined): string {
 }
 
 <script>
-  class StarlightLanguageSelect extends HTMLElement {
+  class VitesseLanguageSelect extends HTMLElement {
     constructor() {
       super()
       const select = this.querySelector('select')
@@ -42,5 +42,5 @@ function localizedPathname(locale: string | undefined): string {
       }
     }
   }
-  customElements.define('vitesse-lang-select', StarlightLanguageSelect)
+  customElements.define('vitesse-lang-select', VitesseLanguageSelect)
 </script>
