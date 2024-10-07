@@ -46,8 +46,8 @@ interface Path extends GetStaticPathsItem {
  */
 const normalizeIndexSlug = (slug: string): string => (slug === 'index' ? '' : slug)
 
-/** All entries in the docs content collection. */
-const docs: VitessePagesEntry[] = (
+/** All entries in the pages content collection. */
+const pages: VitessePagesEntry[] = (
   // eslint-disable-next-line antfu/no-top-level-await
   (await getCollection('pages', ({ data }: { data: any }): boolean => {
     // In production, filter out drafts.
@@ -59,7 +59,7 @@ const docs: VitessePagesEntry[] = (
 }))
 
 function getRoutes(): Route[] {
-  const routes: Route[] = docs.map(entry => ({
+  const routes: Route[] = pages.map(entry => ({
     entry,
     slug: entry.slug,
     id: entry.id,
@@ -69,8 +69,8 @@ function getRoutes(): Route[] {
 
   // In multilingual sites, add required fallback routes.
   if (config.isMultilingual) {
-    /** Entries in the docs content collection for the default locale. */
-    const defaultLocaleDocs = getLocaleDocs(
+    /** Entries in the pages content collection for the default locale. */
+    const defaultLocalePages = getLocalePages(
       config.defaultLocale?.locale === 'root' ? undefined : config.defaultLocale?.locale,
     )
     for (const key in config.locales) {
@@ -80,11 +80,11 @@ function getRoutes(): Route[] {
       if (!localeConfig)
         continue
       const locale = key === 'root' ? undefined : key
-      const localeDocs = getLocaleDocs(locale)
-      for (const fallback of defaultLocaleDocs) {
+      const localePages = getLocalePages(locale)
+      for (const fallback of defaultLocalePages) {
         const slug = localizedSlug(fallback.slug, locale)
         const id = localizedId(fallback.id, locale)
-        const doesNotNeedFallback = localeDocs.some(doc => doc.slug === slug)
+        const doesNotNeedFallback = localePages.some(doc => doc.slug === slug)
         if (doesNotNeedFallback)
           continue
         routes.push({
@@ -135,11 +135,11 @@ export function getLocaleRoutes(locale: string | undefined): Route[] {
 }
 
 /**
- * Get all entries in the docs content collection for a specific locale.
+ * Get all entries in the pages content collection for a specific locale.
  * A locale of `undefined` is treated as the “root” locale, if configured.
  */
-function getLocaleDocs(locale: string | undefined): VitessePagesEntry[] {
-  return filterByLocale(docs, locale)
+function getLocalePages(locale: string | undefined): VitessePagesEntry[] {
+  return filterByLocale(pages, locale)
 }
 
 /** Filter an array to find items whose slug matches the passed locale. */
