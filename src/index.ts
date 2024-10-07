@@ -3,8 +3,10 @@
  * loaded when a user imports the Vitesse integration in their Astro configuration file. These
  * directives must be first at the top of the file and can only be preceded by this comment.
  */
+/// <reference path="./rehype-toc.d.ts" />
 /// <reference path="./locals.d.ts" />
 /// <reference path="./i18n.d.ts" />
+/// <reference path="./virtual.d.ts" />
 
 import type { AstroIntegration } from 'astro'
 import type { PluginTranslations, VitesseUserConfigWithPlugins } from './utils/plugins'
