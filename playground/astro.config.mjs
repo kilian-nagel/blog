@@ -119,6 +119,9 @@ export default defineConfig({
         {
           label: 'Talks',
           slug: 'talks',
+          translations: {
+            es: 'Charlas',
+          },
         },
         {
           label: 'Podcasts',

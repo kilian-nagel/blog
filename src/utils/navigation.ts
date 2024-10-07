@@ -5,8 +5,9 @@ import type {
   SidebarLinkItem,
   SubNavBarItem,
 } from '../schemas/navbar'
-import type { VitesseConfig } from './user-config'
+import type { Route } from './routing'
 
+import type { VitesseConfig } from './user-config'
 import { AstroError } from 'astro/errors'
 import config from 'virtual:vitesse/user-config'
 import { createPathFormatter } from './create-path-formatter'
@@ -107,13 +108,7 @@ function linkFromNavBarLinkItem(
   )
 }
 
-/** Create a link entry from an automatic internal link item in user config. */
-function linkFromInternalNavBarLinkItem(
-  item: InternalSidebarLinkItem,
-  locale: string | undefined,
-  currentPathname: string,
-): Link {
-  // Astro passes root `index.[md|mdx]` entries with a slug of `index`
+function getLocalizedSlugAndEntry(item: { slug: string }, locale: string | undefined, routes: Route[]): { entry: Route } {
   const slug = item.slug === 'index' ? '' : item.slug
   const localizedSlug = locale ? (slug ? `${locale}/${slug}` : locale) : slug
   const entry = routes.find(entry => localizedSlug === entry.slug)
@@ -133,8 +128,16 @@ function linkFromInternalNavBarLinkItem(
       )
     }
   }
-  const label
-    = pickLang(item.translations, localeToLang(locale)) || item.label || entry.entry.data.title
+  return { entry }
+}
+
+function linkFromInternalNavBarLinkItem(
+  item: InternalSidebarLinkItem,
+  locale: string | undefined,
+  currentPathname: string,
+): Link {
+  const { entry } = getLocalizedSlugAndEntry(item, locale, routes)
+  const label = pickLang(item.translations, localeToLang(locale)) || item.label || entry.entry.data.title
   return makeNavBarLink({
     href: entry.slug,
     label,
@@ -213,28 +216,8 @@ function linkFromInternalSubNavBarLinkItem(
   locale: string | undefined,
   currentPathname: string,
 ): SubNavBarLink {
-  // Astro passes root `index.[md|mdx]` entries with a slug of `index`
-  const slug = item.slug === 'index' ? '' : item.slug
-  const localizedSlug = locale ? (slug ? `${locale}/${slug}` : locale) : slug
-  const entry = routes.find(entry => localizedSlug === entry.slug)
-  if (!entry) {
-    const hasExternalSlashes = item.slug.at(0) === '/' || item.slug.at(-1) === '/'
-    if (hasExternalSlashes) {
-      throw new AstroError(
-        `The slug \`"${item.slug}"\` specified in the Vitesse navBar config must not start or end with a slash.`,
-        `Please try updating \`"${item.slug}"\` to \`"${stripLeadingAndTrailingSlashes(item.slug)}"\`.`,
-      )
-    }
-    else {
-      throw new AstroError(
-        `The slug \`"${item.slug}"\` specified in the Vitesse navBar config does not exist.`,
-        'Update the Vitesse config to reference a valid entry slug in the docs content collection.\n'
-        + 'Learn more about Astro content collection slugs at https://docs.astro.build/en/reference/api-reference/#getentry',
-      )
-    }
-  }
-  const label
-    = pickLang(item.translations, localeToLang(locale)) || item.label || entry.entry.data.title
+  const { entry } = getLocalizedSlugAndEntry(item, locale, routes)
+  const label = pickLang(item.translations, localeToLang(locale)) || item.label || entry.entry.data.title
   return makeSubNavBarLink({
     href: entry.slug,
     label,
