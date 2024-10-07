@@ -142,7 +142,7 @@ const UserConfigSchema = z.object({
   /** Enable displaying a “Built with Astro Vitesse link in your site’s footer. */
   credits: z
     .boolean()
-    .default(false)
+    .default(true)
     .describe('Enable displaying a “Built with Astro Vitesse" link in your site’s footer.'),
 
   /**
