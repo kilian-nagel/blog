@@ -109,7 +109,7 @@ importers:
         specifier: ^2.1.2
         version: 2.1.2(@types/node@22.7.5)
 
-  playground:
+  docs:
     dependencies:
       '@astrojs/check':
         specifier: ^0.9.4
@@ -120,9 +120,15 @@ importers:
       astro:
         specifier: ^4.15.12
         version: 4.15.12(@types/node@22.7.5)(rollup@4.24.0)(typescript@5.6.2)
+      astro-og-canvas:
+        specifier: ^0.5.3
+        version: 0.5.3(astro@4.15.12(@types/node@22.7.5)(rollup@4.24.0)(typescript@5.6.2))
       astro-vitesse:
         specifier: workspace:*
         version: link:..
+      canvaskit-wasm:
+        specifier: ^0.39.1
+        version: 0.39.1
       typescript:
         specifier: ^5.6.2
         version: 5.6.2
@@ -1353,6 +1359,9 @@ packages:
   '@vue/shared@3.5.11':
     resolution: {integrity: sha512-W8GgysJVnFo81FthhzurdRAWP/byq3q2qIw70e0JWblzVhjgOMiC2GyovXrZTFQJnFVryYaKGP3Tc9vYzYm6PQ==}
 
+  '@webgpu/types@0.1.21':
+    resolution: {integrity: sha512-pUrWq3V5PiSGFLeLxoGqReTZmiiXwY3jRkIG5sLLKjyqNxrwm/04b4nw7LSmGWJcKk59XOM/YRTUwOzo4MMlow==}
+
   '@xml-tools/parser@1.0.11':
     resolution: {integrity: sha512-aKqQ077XnR+oQtHJlrAflaZaL7qZsulWc/i/ZEooar5JiWj1eLt0+Wg28cpa+XLney107wXqneC+oG1IZvxkTA==}
 
@@ -1438,6 +1447,12 @@ packages:
   astro-eslint-parser@1.0.3:
     resolution: {integrity: sha512-AGsGgcg7Jg9UpyCDgvl/EkdYpe1oMkFdmC2Zl+KWneoieLCtQIFjmcY8yt41gcNx4mby0w8BBJQcBmPuf8UAoQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  astro-og-canvas@0.5.3:
+    resolution: {integrity: sha512-xy4k3D/fq4vq71B8CKsqBRuAd2kRJjMaeOMH9EFVtPPqudrDGXG2k87SdxPr5FATvttWpIjYplqK/vYJAoZ2DA==}
+    engines: {node: '>=18.14.1'}
+    peerDependencies:
+      astro: ^3.0.0 || ^4.0.0
 
   astro@4.15.12:
     resolution: {integrity: sha512-PojmALAzwafLUD//hqKD4/+1Fj03Aa2VQY/rztCg6DUMgHLpo3TFV3ob1++kay91z/MdNWR+IGITcXhxAXhiTg==}
@@ -1532,6 +1547,9 @@ packages:
 
   caniuse-lite@1.0.30001667:
     resolution: {integrity: sha512-7LTwJjcRkzKFmtqGsibMeuXmvFDfZq/nzIjnmgCGzKKRVzjD72selLDK1oPF/Oxzmt4fNcPvTDvGqSDG4tCALw==}
+
+  canvaskit-wasm@0.39.1:
+    resolution: {integrity: sha512-Gy3lCmhUdKq+8bvDrs9t8+qf7RvcjuQn+we7vTVVyqgOVO1UVfHpsnBxkTZw+R4ApEJ3D5fKySl9TU11hmjl/A==}
 
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -5351,6 +5369,8 @@ snapshots:
 
   '@vue/shared@3.5.11': {}
 
+  '@webgpu/types@0.1.21': {}
+
   '@xml-tools/parser@1.0.11':
     dependencies:
       chevrotain: 7.1.1
@@ -5440,6 +5460,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
+
+  astro-og-canvas@0.5.3(astro@4.15.12(@types/node@22.7.5)(rollup@4.24.0)(typescript@5.6.2)):
+    dependencies:
+      astro: 4.15.12(@types/node@22.7.5)(rollup@4.24.0)(typescript@5.6.2)
+      canvaskit-wasm: 0.39.1
+      deterministic-object-hash: 2.0.2
+      entities: 4.5.0
 
   astro@4.15.12(@types/node@22.7.5)(rollup@4.24.0)(typescript@5.5.4):
     dependencies:
@@ -5704,6 +5731,10 @@ snapshots:
   camelcase@8.0.0: {}
 
   caniuse-lite@1.0.30001667: {}
+
+  canvaskit-wasm@0.39.1:
+    dependencies:
+      '@webgpu/types': 0.1.21
 
   ccount@2.0.1: {}
 

@@ -42,8 +42,8 @@
     "test": "vitest",
     "typecheck": "tsc --noEmit",
     "prepare": "simple-git-hooks && pnpm astro sync",
-    "playground": "nr -C playground dev",
-    "playground:build": "nr -C playground build"
+    "docs": "nr -C docs dev",
+    "docs:build": "nr -C docs build"
   },
   "peerDependencies": {
     "@iconify/json": "^2.2.256",

@@ -7,7 +7,7 @@ export default defineConfig({
       reportsDirectory: './coverage',
       exclude: [
         ...coverageConfigDefaults.exclude,
-        'playground/**',
+        'docs/**',
         '**/vitest.*',
         'src/types.ts',
         // We use this to set up test environments so it isn‘t picked up, but we are testing it downstream.

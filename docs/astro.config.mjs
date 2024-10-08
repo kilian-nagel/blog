@@ -29,6 +29,7 @@ export default defineConfig({
       },
       components: {
         Footer: '/src/components/Footer.astro',
+        Head: '/src/components/Head.astro',
       },
       social: {
         twitter: 'https://twitter.com/adrianub',
@@ -134,6 +135,25 @@ export default defineConfig({
         {
           label: 'Notes',
           slug: 'notes',
+        },
+      ],
+      plugins: [
+        {
+          name: 'vitesse-plugin-i18n',
+          hooks: {
+            setup: ({ injectTranslations }) => {
+              injectTranslations({
+                en: {
+                  'sponsor.thanks': 'If you enjoy my work and find them useful, consider sponsor me to help Open Source sustainable. Thank you!',
+                  'sponsor.to-suport': 'Sponsor to support',
+                },
+                es: {
+                  'sponsor.thanks': 'Si disfrutas de mi trabajo y te resulta útil, considera patrocinarme para ayudar a que el Open Source sea sostenible. ¡Gracias!',
+                  'sponsor.to-suport': 'Patrocinar para apoyar a',
+                },
+              })
+            },
+          },
         },
       ],
     }),
