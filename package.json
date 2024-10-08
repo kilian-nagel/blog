@@ -70,7 +70,7 @@
     "@prettier/plugin-xml": "^3.4.1",
     "@types/node": "^22.7.5",
     "@types/nprogress": "^0.2.3",
-    "@unocss/eslint-plugin": "^0.63.3",
+    "@unocss/eslint-plugin": "^0.63.4",
     "@vitest/coverage-v8": "2.1.2",
     "astro": "^4.15.12",
     "bumpp": "^9.6.1",
@@ -82,7 +82,7 @@
     "prettier-plugin-astro": "^0.14.1",
     "simple-git-hooks": "^2.11.1",
     "typescript": "5.5.4",
-    "unocss": "^0.63.3",
+    "unocss": "^0.63.4",
     "vite": "^5.4.8",
     "vitest": "^2.1.2"
   },
