@@ -9,6 +9,7 @@ export function ComponentConfigSchema() {
       ScrollToTop: z.string().default('astro-vitesse/components/ScrollToTop.astro'),
       SiteTitle: z.string().default('astro-vitesse/components/SiteTitle.astro'),
       NavBar: z.string().default('astro-vitesse/components/NavBar.astro'),
+      Head: z.string().default('astro-vitesse/components/Head.astro'),
     })
     .default({})
 }

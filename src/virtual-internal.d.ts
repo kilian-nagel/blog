@@ -45,3 +45,7 @@ declare module 'virtual:vitesse/components/NavBar' {
   const NavBar: typeof import('./components/NavBar.astro').default
   export default NavBar
 }
+declare module 'virtual:vitesse/components/Head' {
+  const Head: typeof import('./components/Head.astro').default
+  export default Head
+}
