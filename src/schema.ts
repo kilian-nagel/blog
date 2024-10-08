@@ -3,6 +3,8 @@ import type { SchemaContext } from 'astro:content'
 import { z } from 'astro/zod'
 import { HeadConfigSchema } from './schemas/head'
 
+export { i18nSchema } from './schemas/i18n'
+
 // eslint-disable-next-line ts/explicit-function-return-type
 function VitessePageFrontmatterSchema(context: SchemaContext) {
   return z.object({
