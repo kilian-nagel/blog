@@ -19,7 +19,7 @@
     "astro-vitesse": "workspace:*",
     "canvaskit-wasm": "^0.39.1",
     "typescript": "^5.6.3",
-    "unocss": "^0.63.4"
+    "unocss": "0.59.4"
   },
   "devDependencies": {
     "@iconify/json": "^2.2.258",

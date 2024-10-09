@@ -49,7 +49,7 @@
     "@iconify/json": "^2.2.256",
     "@unocss/reset": "^0.63.2",
     "astro": "^4.15.0",
-    "unocss": "^0.63.2"
+    "unocss": "^0.59.4"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^5.2.0",
@@ -82,7 +82,7 @@
     "prettier-plugin-astro": "^0.14.1",
     "simple-git-hooks": "^2.11.1",
     "typescript": "5.5.4",
-    "unocss": "^0.63.4",
+    "unocss": "0.59.4",
     "vite": "^5.4.8",
     "vitest": "^2.1.2"
   },
