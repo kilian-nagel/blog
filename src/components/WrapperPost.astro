@@ -3,11 +3,20 @@ import type { Props } from '../props'
 
 import config from 'virtual:vitesse/user-config'
 import { formatDate } from '../logics'
+import { generateToc } from '../utils/toc'
 import DraftContentNotice from './DraftContentNotice.astro'
 import FallbackContentNotice from './FallbackContentNotice.astro'
+import Toc from './Toc.astro'
 
 const { entry } = Astro.props
 const { data: frontmatter } = entry
+
+const {
+  remarkPluginFrontmatter: { hasToc },
+  headings,
+} = await entry.render()
+
+const toc = generateToc(headings ?? [], 1, 4)
 
 let tweetUrl = ''
 let elkUrl = ''
@@ -59,6 +68,13 @@ if (config.social?.mastodon) {
 >
   {Astro.props.entry.data.draft && <DraftContentNotice {...Astro.props} />}
   {Astro.props.isFallback && <FallbackContentNotice {...Astro.props} />}
+  {
+    hasToc && (
+      <section>
+        <Toc headings={toc} />
+      </section>
+    )
+  }
   <slot />
 </article>
 {

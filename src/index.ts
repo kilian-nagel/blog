@@ -3,7 +3,6 @@
  * loaded when a user imports the Vitesse integration in their Astro configuration file. These
  * directives must be first at the top of the file and can only be preceded by this comment.
  */
-/// <reference path="./rehype-toc.d.ts" />
 /// <reference path="./locals.d.ts" />
 /// <reference path="./i18n.d.ts" />
 /// <reference path="./virtual.d.ts" />
@@ -13,12 +12,11 @@ import type { PluginTranslations, VitesseUserConfigWithPlugins } from './utils/p
 
 import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 import mdx from '@astrojs/mdx'
-import rehypeToc from '@microflash/rehype-toc'
-import { h } from 'hastscript'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
 import { vitesseSitemap } from './integrations/sitemap'
 import { vitePluginVitesseUserConfig } from './integrations/virtual-user-config'
+import { rehypeToc } from './plugins/rehype-toc'
 import { processI18nConfig } from './utils/i18n'
 import { injectPluginTranslationsTypes, runPlugins } from './utils/plugins'
 import { createTranslationSystemFromFs } from './utils/translations-fs'
@@ -101,26 +99,8 @@ export default function VitesseIntegration({
           },
           markdown: {
             rehypePlugins: [
+              rehypeToc,
               rehypeHeadingIds,
-              [
-                rehypeToc,
-                {
-                  toc: (headings: { id: string, title: string, depth: number }[]) => {
-                    return h('section', [
-                      h('div.table-of-contents', [
-                        h('div.table-of-contents-anchor', [
-                          h('div.i-ri-menu-2-fill'),
-                        ]),
-                        h('ul', [
-                          ...headings.map(heading => h(`li`, [
-                            h('a', { href: `#${heading.id}` }, heading.title),
-                          ])),
-                        ]),
-                      ]),
-                    ])
-                  },
-                },
-              ],
               [
                 rehypeAutolinkHeadings,
                 {

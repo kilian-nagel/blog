@@ -12,17 +12,17 @@ Here is a sample of some basic Markdown syntax that can be used when writing Mar
 
 The following HTML `<h1>`—`<h6>` elements represent six levels of section headings. `<h1>` is the highest section level while `<h6>` is the lowest.
 
-# H1
+<h1>H1</h1>
 
-## H2
+<h2>H2</h2>
 
-### H3
+<h3>H3</h3>
 
-#### H4
+<h4>H4</h4>
 
-##### H5
+<h5>H5</h5>
 
-###### H6
+<h6>H6</h6>
 
 ## Paragraph
 
