@@ -1,9 +1,9 @@
 ---
-import { CollectionEntry } from 'astro:content'
+import type { CollectionEntry, InferEntrySchema } from 'astro:content'
 import { formatDate } from '../logics'
 import { slugToLocaleData } from '../utils/slugs'
 import { ensureLeadingSlash, stripLeadingSlash } from '../utils/path'
-import { getLocaleRoutes, Route, VitessePagesEntry } from '../utils/routing'
+import { getLocaleRoutes, type Route } from '../utils/routing'
 import { generateVitessePageRouteData } from '../utils/vitesse-page'
 
 export interface Props {
@@ -11,7 +11,7 @@ export interface Props {
   items?: CollectionEntry<'pages'>['data'][]
 }
 
-let { startsWith = 'posts/', items: pagesProps } = Astro.props
+const { startsWith = 'posts/', items: pagesProps } = Astro.props
 
 let pagesCollection: Route[] = []
 
@@ -23,29 +23,29 @@ if (!pagesProps?.length) {
   pagesCollection = routes
 }
 
-const newPagePros = [...(pagesProps || [])].map(async (page) => {
-  const { entry, slug, id, entryMeta, dir, lang, locale } = await generateVitessePageRouteData({
-    url: Astro.url,
-    props: {
-      frontmatter: page,
-      lang: localeData.locale,
-    },
-  })
+const newPagePros: Route[] = await Promise.all(
+  [...(pagesProps || [])].map(async (page): Promise<Route> => {
+    const { entry, slug, id, entryMeta, dir, lang, locale } = await generateVitessePageRouteData({
+      url: Astro.url,
+      props: {
+        frontmatter: page,
+        lang: localeData.locale,
+      },
+    })
 
-  return {
-    entry,
-    slug,
-    id,
-    entryMeta,
-    dir,
-    lang,
-    locale,
-  }
-})
+    return {
+      entry,
+      slug,
+      id,
+      entryMeta,
+      dir,
+      lang,
+      locale,
+    }
+  }),
+)
 
-pagesProps = await Promise.all(newPagePros)
-
-const pages: Route[] = [...((pagesProps.length ? pagesProps : null) || pagesCollection)]
+const pages: Route[] = [...((newPagePros.length ? newPagePros : null) || pagesCollection)]
   .sort((a, b) => +new Date(b.entry.data.date!) - +new Date(a.entry.data.date!))
   .map((page) => ({
     ...page,
@@ -61,11 +61,11 @@ const pages: Route[] = [...((pagesProps.length ? pagesProps : null) || pagesColl
 const getYear = (a: Date | string | number) => new Date(a).getFullYear()
 const isFuture = (a?: Date | string | number) => a && new Date(a) > new Date()
 const isSameYear = (a?: Date | string | number, b?: Date | string | number) => a && b && getYear(a) === getYear(b)
-function isSameGroup(a: VitessePagesEntry, b?: VitessePagesEntry) {
+function isSameGroup(a: InferEntrySchema<'pages'>, b?: InferEntrySchema<'pages'>) {
   return isFuture(a.date) === isFuture(b?.date) && isSameYear(a.date, b?.date)
 }
 
-function getGroupName(p: VitessePagesEntry) {
+function getGroupName(p: InferEntrySchema<'pages'>) {
   if (isFuture(p.date)) return 'Upcoming'
   return getYear(p.date!)
 }
@@ -121,8 +121,8 @@ function getGroupName(p: VitessePagesEntry) {
             href={data.path}
             class="item block font-normal mb-6 mt-2 no-underline"
             {...{
-              target: data.path.startsWith('http') ? '_blank' : undefined,
-              rel: data.path.startsWith('http') ? 'noopener noreferrer' : undefined,
+              target: data.path?.startsWith('http') ? '_blank' : undefined,
+              rel: data.path?.startsWith('http') ? 'noopener noreferrer' : undefined,
             }}
           >
             <li class="no-underline" flex="~ col md:row gap-2 md:items-center">

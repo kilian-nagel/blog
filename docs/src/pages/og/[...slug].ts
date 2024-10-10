@@ -1,8 +1,14 @@
+/* eslint-disable ts/ban-ts-comment */
 import { OGImageRoute } from 'astro-og-canvas'
 
+// @ts-ignore
 import { paths } from 'node_modules/astro-vitesse/src/utils/routing'
 
-const pages = Object.fromEntries(paths.map(({ params: { slug }, props: {
+const pages = Object.fromEntries(paths.map(({ params: {
+  // @ts-ignore
+  slug,
+}, props: {
+  // @ts-ignore
   entry,
 } }) => {
   return [!slug ? 'index' : slug, entry?.data]
