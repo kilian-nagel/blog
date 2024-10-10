@@ -3,6 +3,7 @@ import type { Route } from './routing'
 import config from 'virtual:vitesse/user-config'
 import { formatPath } from './format-path'
 import { getNavBar, type NavBarEntry } from './navigation'
+import { generateToc, type TocHeading } from './toc'
 
 export interface PageProps extends Route {
 
@@ -16,6 +17,8 @@ export interface VitesseRouteData extends Route {
   isFullWidthLayout?: boolean
   /** Site navigation sidebar entries for this page. */
   navBar: NavBarEntry[]
+  hasToc: boolean
+  headins: TocHeading[]
 }
 
 /** Get the site title for a given language. */
@@ -31,15 +34,22 @@ export function getSiteTitleHref(locale: string | undefined): string {
   return formatPath(locale || '/')
 }
 
-export function generateRouteData({
+export async function generateRouteData({
   props,
   url,
 }: {
   props: PageProps
   url: URL
-}): VitesseRouteData {
+}): Promise<VitesseRouteData> {
   const { entry, locale, lang } = props
   const navBar = getNavBar(url.pathname, locale)
+  let tocHeading: TocHeading[] = []
+
+  const { remarkPluginFrontmatter: { hasToc = false }, headings } = await entry.render()
+
+  if (hasToc) {
+    tocHeading = generateToc(headings, 1, 4)
+  }
 
   const siteTitle = getSiteTitle(lang)
   return {
@@ -48,5 +58,7 @@ export function generateRouteData({
     navBar,
     siteTitleHref: getSiteTitleHref(locale),
     isFullWidthLayout: entry?.data.layoutFullWidth,
+    hasToc,
+    headins: tocHeading,
   }
 }

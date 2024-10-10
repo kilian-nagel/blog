@@ -8,15 +8,8 @@ import DraftContentNotice from './DraftContentNotice.astro'
 import FallbackContentNotice from './FallbackContentNotice.astro'
 import Toc from './Toc.astro'
 
-const { entry } = Astro.props
+const { entry, hasToc, headins } = Astro.props
 const { data: frontmatter } = entry
-
-const {
-  remarkPluginFrontmatter: { hasToc },
-  headings,
-} = await entry.render()
-
-const toc = generateToc(headings ?? [], 1, 4)
 
 let tweetUrl = ''
 let elkUrl = ''
@@ -71,7 +64,7 @@ if (config.social?.mastodon) {
   {
     hasToc && (
       <section>
-        <Toc headings={toc} />
+        <Toc headings={headins} />
       </section>
     )
   }
