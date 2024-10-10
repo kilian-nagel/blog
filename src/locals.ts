@@ -1,5 +1,3 @@
-/// <reference types="./locals.d.ts" />
-
 import { defineMiddleware } from 'astro:middleware'
 import { useTranslations } from './utils/translations'
 
