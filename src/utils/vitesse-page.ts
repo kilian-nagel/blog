@@ -1,5 +1,6 @@
 import type { ContentConfig, SchemaContext } from 'astro:content'
 import type { VitessePagesEntry } from './routing'
+import type { TocHeading } from './toc'
 import type { Prettify, RemoveIndexSignature } from './types'
 import type { VitesseConfig, VitesseUserConfig } from './user-config'
 import { z } from 'astro/zod'
@@ -23,7 +24,8 @@ import { slugToLocaleData, urlToSlug } from './slugs'
  * The frontmatter schema for Vitesse pages cannot include some properties which will be omitted
  * and some others needs to be refined to a stricter type.
  */
-async function VitessePageFrontmatterSchema(context: SchemaContext): Promise<z.ZodEffects<z.ZodObject<any>>> {
+// eslint-disable-next-line ts/explicit-function-return-type
+async function VitessePageFrontmatterSchema(context: SchemaContext) {
   const userPagesSchema = await getUserPagesSchema()
   const schema = typeof userPagesSchema === 'function' ? userPagesSchema(context) : userPagesSchema
 
@@ -58,7 +60,10 @@ async function VitessePageFrontmatterSchema(context: SchemaContext): Promise<z.Z
  * @see VitessePageFrontmatterSchema
  */
 type VitessePageFrontmatter =
-  z.input<Awaited<ReturnType<typeof VitessePageFrontmatterSchema>>>
+  Omit<
+    z.input<Awaited<ReturnType<typeof VitessePageFrontmatterSchema>>>,
+    'navBar'
+  >
 
 /** Parse navBar prop to ensure it's valid. */
 function validateNavBarProp(navBarProp: VitesseUserConfig['navBar']): VitesseConfig['navBar'] {
@@ -75,9 +80,11 @@ function validateNavBarProp(navBarProp: VitesseUserConfig['navBar']): VitesseCon
 export type VitessePageProps = Prettify<
   // Remove the index signature from `Route`, omit undesired properties and make the rest optional.
   Partial<Omit<RemoveIndexSignature<PageProps>, 'entry' | 'entryMeta' | 'id' | 'locale' | 'slug'>> &
-  {
+  // Add the sidebar definitions for a Starlight page.
+  Partial<Pick<VitesseRouteData, 'hasToc'>> & {
     navBar?: VitesseUserConfig['navBar']
-    // And finally add the Vitesse page frontmatter properties in a `frontmatter` property.
+    headings?: TocHeading[]
+    // And finally add the Starlight page frontmatter properties in a `frontmatter` property.
     frontmatter: VitessePageFrontmatter
   }
 >
@@ -119,9 +126,6 @@ export async function generateVitessePageRouteData({
     collection: 'pages',
     data: {
       ...pageFrontmatter,
-      navBar: {
-        attrs: {},
-      },
     },
   }
   const entry = pagePagesEntry as unknown as VitessePagesEntry
@@ -140,6 +144,8 @@ export async function generateVitessePageRouteData({
     siteTitle: getSiteTitle(localeData.lang),
     siteTitleHref: getSiteTitleHref(localeData.locale),
     slug,
+    hasToc: props.hasToc ?? false,
+    headings: props.headings ?? [],
   }
   if (isFallback) {
     routeData.isFallback = true

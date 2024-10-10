@@ -18,7 +18,7 @@ export interface VitesseRouteData extends Route {
   /** Site navigation sidebar entries for this page. */
   navBar: NavBarEntry[]
   hasToc: boolean
-  headins: TocHeading[]
+  headings: TocHeading[]
 }
 
 /** Get the site title for a given language. */
@@ -59,6 +59,6 @@ export async function generateRouteData({
     siteTitleHref: getSiteTitleHref(locale),
     isFullWidthLayout: entry?.data.layoutFullWidth,
     hasToc,
-    headins: tocHeading,
+    headings: tocHeading,
   }
 }

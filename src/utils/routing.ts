@@ -49,11 +49,11 @@ const normalizeIndexSlug = (slug: string): string => (slug === 'index' ? '' : sl
 /** All entries in the pages content collection. */
 const pages: VitessePagesEntry[] = (
   // eslint-disable-next-line antfu/no-top-level-await
-  (await getCollection('pages', ({ data }: { data: any }): boolean => {
+  (await getCollection('pages', ({ data }): boolean => {
     // In production, filter out drafts.
     return import.meta.env.MODE !== 'production' || data.draft === false
   })) ?? []
-).map(({ slug, ...entry }: { slug: string, [key: string]: any }) => ({
+).map(({ slug, ...entry }) => ({
   ...entry,
   slug: normalizeIndexSlug(slug),
 }))

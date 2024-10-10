@@ -8,7 +8,7 @@ import DraftContentNotice from './DraftContentNotice.astro'
 import FallbackContentNotice from './FallbackContentNotice.astro'
 import Toc from './Toc.astro'
 
-const { entry, hasToc, headins } = Astro.props
+const { entry, hasToc, headings } = Astro.props
 const { data: frontmatter } = entry
 
 let tweetUrl = ''
@@ -64,7 +64,7 @@ if (config.social?.mastodon) {
   {
     hasToc && (
       <section>
-        <Toc headings={headins} />
+        <Toc headings={headings} />
       </section>
     )
   }
