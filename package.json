@@ -40,8 +40,8 @@
     "lint": "eslint .",
     "release": "bumpp && npm publish",
     "test": "vitest",
-    "typecheck": "tsc --noEmit",
-    "prepare": "simple-git-hooks && pnpm astro sync",
+    "typecheck": "astro check --minimumSeverity warning --noSync && pnpm --filter docs typecheck",
+    "prepare": "simple-git-hooks",
     "docs": "nr -C docs dev",
     "docs:build": "nr -C docs build"
   },
