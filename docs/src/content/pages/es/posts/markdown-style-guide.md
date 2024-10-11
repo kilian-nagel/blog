@@ -6,11 +6,11 @@ duration: 5min
 
 [[toc]]
 
-Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.
+A continuación se muestra un ejemplo de sintaxis básica de Markdown que se puede utilizar al escribir contenido de Markdown en Astro.
 
-## Headings
+## Encabezados
 
-The following HTML `<h1>`—`<h6>` elements represent six levels of section headings. `<h1>` is the highest section level while `<h6>` is the lowest.
+Los siguientes elementos HTML `<h1>`—`<h6>` representan seis niveles de encabezados de sección. `<h1>` es el nivel de sección más alto, mientras que `<h6>` es el más bajo.
 
 # H1
 
@@ -24,61 +24,61 @@ The following HTML `<h1>`—`<h6>` elements represent six levels of section head
 
 ###### H6
 
-## Paragraph
+## Párrafo
 
 Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur? Quiatem. Nam, omnis sum am facea corem alique molestrunt et eos evelece arcillit ut aut eos eos nus, sin conecerem erum fuga. Ri oditatquam, ad quibus unda veliamenimin cusam et facea ipsamus es exerum sitate dolores editium rerore eost, temped molorro ratiae volorro te reribus dolorer sperchicium faceata tiustia prat.
 
 Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sapicia is sinveli squiatum, core et que aut hariosam ex eat.
 
-## Images
+## Imágenes
 
-### Syntax
+### Sintaxis
 
 ```markdown
 ![Alt text](./full/or/relative/path/of/image)
 ```
 
-### Output
+### Salida
 
 ![blog placeholder](/blog-placeholder-about.jpg)
 
-## Blockquotes
+## Citas en bloque
 
-The blockquote element represents content that is quoted from another source, optionally with a citation which must be within a `footer` or `cite` element, and optionally with in-line changes such as annotations and abbreviations.
+El elemento blockquote representa contenido que se cita de otra fuente, opcionalmente con una cita que debe estar dentro de un `footer` o elemento de cita `cite`, y opcionalmente con cambios en línea como anotaciones y abreviaturas.
 
-### Blockquote without attribution
+### Cita en bloque sin atribución
 
-#### Syntax
+#### Sintaxis
 
 ```markdown
 > Tiam, ad mint andaepu dandae nostion secatur sequo quae.
 > **Note** that you can use _Markdown syntax_ within a blockquote.
 ```
 
-#### Output
+#### Salida
 
 > Tiam, ad mint andaepu dandae nostion secatur sequo quae.
 > **Note** that you can use _Markdown syntax_ within a blockquote.
 
-### Blockquote with attribution
+### Cita en bloque con atribución
 
-#### Syntax
+#### Sintaxis
 
 ```markdown
 > Don't communicate by sharing memory, share memory by communicating.<br>
 > — <cite>Rob Pike[^1]</cite>
 ```
 
-#### Output
+#### Salida
 
 > Don't communicate by sharing memory, share memory by communicating.<br>
 > — <cite>Rob Pike[^1]</cite>
 
 [^1]: The above quote is excerpted from Rob Pike's [talk](https://www.youtube.com/watch?v=PAAkCSZUG1c) during Gopherfest, November 18, 2015.
 
-## Tables
+## Tablas
 
-### Syntax
+### Sintaxis
 
 ```markdown
 | Italics   | Bold     | Code   |
@@ -86,17 +86,17 @@ The blockquote element represents content that is quoted from another source, op
 | _italics_ | **bold** | `code` |
 ```
 
-### Output
+### Salida
 
 | Italics   | Bold     | Code   |
 | --------- | -------- | ------ |
 | _italics_ | **bold** | `code` |
 
-## Code Blocks
+## Bloques de código
 
-### Syntax
+### Sintaxis
 
-we can use 3 backticks ``` in new line and write snippet and close with 3 backticks on new line and to highlight language specific syntax, write one word of language name after first 3 backticks, for eg. html, javascript, css, markdown, typescript, txt, bash
+podemos usar 3 comillas invertidas ``` en una nueva línea y escribir un fragmento y cerrar con 3 comillas invertidas en una nueva línea y para resaltar la sintaxis específica del idioma, escribir una palabra del nombre del idioma después de las primeras 3 comillas invertidas, por ejemplo, html, javascript, css, markdown, typescript, txt, bash
 
 ````markdown
 ```html
@@ -113,7 +113,7 @@ we can use 3 backticks ``` in new line and write snippet and close with 3 backti
 ```
 ````
 
-### Output
+### Salida
 
 ```html
 <!doctype html>
@@ -128,11 +128,11 @@ we can use 3 backticks ``` in new line and write snippet and close with 3 backti
 </html>
 ```
 
-## List Types
+## Tipos de listas
 
-### Ordered List
+### Lista ordenada
 
-#### Syntax
+#### Sintaxis
 
 ```markdown
 1. First item
@@ -140,15 +140,15 @@ we can use 3 backticks ``` in new line and write snippet and close with 3 backti
 3. Third item
 ```
 
-#### Output
+#### Salida
 
 1. First item
 2. Second item
 3. Third item
 
-### Unordered List
+### Lista desordenada
 
-#### Syntax
+#### Sintaxis
 
 ```markdown
 - List item
@@ -156,15 +156,15 @@ we can use 3 backticks ``` in new line and write snippet and close with 3 backti
 - And another item
 ```
 
-#### Output
+#### Salida
 
 - List item
 - Another item
 - And another item
 
-### Nested list
+### Lista anidada
 
-#### Syntax
+#### Sintaxis
 
 ```markdown
 - Fruit
@@ -176,7 +176,7 @@ we can use 3 backticks ``` in new line and write snippet and close with 3 backti
   - Cheese
 ```
 
-#### Output
+#### Salida
 
 - Fruit
   - Apple
@@ -186,9 +186,9 @@ we can use 3 backticks ``` in new line and write snippet and close with 3 backti
   - Milk
   - Cheese
 
-## Other Elements — abbr, sub, sup, kbd, mark
+## Otros elementos: abbr, sub, sup, kbd, mark
 
-### Syntax
+### Sintaxis
 
 ```markdown
 <abbr title="Graphics Interchange Format">GIF</abbr> is a bitmap image format.
@@ -202,7 +202,7 @@ Press <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>Delete</kbd> to end the session.
 Most <mark>salamanders</mark> are nocturnal, and hunt for insects, worms, and other small creatures.
 ```
 
-### Output
+### Salida
 
 <abbr title="Graphics Interchange Format">GIF</abbr> is a bitmap image format.
 
