@@ -12,14 +12,6 @@ declare module 'virtual:vitesse/project-context' {
 
 declare module 'virtual:vitesse/user-css' { }
 
-declare module 'virtual:vitesse/user-images' {
-  type ImageMetadata = import('astro').ImageMetadata
-  export const logos: {
-    dark?: ImageMetadata
-    light?: ImageMetadata
-  }
-}
-
 declare module 'virtual:vitesse/collection-config' {
   export const collections: import('astro:content').ContentConfig['collections'] | undefined
 }
