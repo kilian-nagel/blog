@@ -3,7 +3,6 @@ import type { Props } from '../props'
 
 import config from 'virtual:vitesse/user-config'
 import { formatDate } from '../logics'
-import { generateToc } from '../utils/toc'
 import DraftContentNotice from './DraftContentNotice.astro'
 import FallbackContentNotice from './FallbackContentNotice.astro'
 import Toc from './Toc.astro'
@@ -53,14 +52,20 @@ if (config.social?.mastodon) {
     </div>
   )
 }
+{
+  (Astro.props.entry.data.draft || Astro.props.isFallback) && (
+    <div class:list={['prose m-auto mb-8', frontmatter.wrapperClass]}>
+      {Astro.props.entry.data.draft && <DraftContentNotice {...Astro.props} />}
+      {Astro.props.isFallback && <FallbackContentNotice {...Astro.props} />}
+    </div>
+  )
+}
 <article
   class:list={[
     frontmatter.tocAlwaysOn ? 'toc-always-on' : '',
     frontmatter.layoutFullWidth ? '' : 'prose m-auto slide-enter-content',
   ]}
 >
-  {Astro.props.entry.data.draft && <DraftContentNotice {...Astro.props} />}
-  {Astro.props.isFallback && <FallbackContentNotice {...Astro.props} />}
   {
     hasToc && (
       <section>
