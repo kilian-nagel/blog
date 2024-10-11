@@ -72,40 +72,20 @@ function getGroupName(p: InferEntrySchema<'pages'>) {
 ---
 
 <ul>
-  {
-    !pages.length && (
-      <div py2 op50>
-        {'{ nothing here yet }'}
-      </div>
-    )
-  }
+  {!pages.length && <div class="py2 op50">{'{ nothing here yet }'}</div>}
 
   {
     pages.map(({ entry: { data }, isFallback, entryMeta }, idx) => (
       <>
         {!isSameGroup(data, pages[idx - 1]?.entry.data) && (
           <div
-            select-none
-            relative
-            h20
-            pointer-events-none
-            slide-enter
+            class="select-none relative h20 pointer-events-none slide-enter"
             style={{
               '--enter-stage': idx - 2,
               '--enter-step': '60ms',
             }}
           >
-            <span
-              text-8em
-              color-transparent
-              absolute
-              left--3rem
-              top--2rem
-              font-bold
-              text-stroke-2
-              text-stroke-hex-aaa
-              op10
-            >
+            <span class="text-8em color-transparent absolute left--3rem top--2rem font-bold text-stroke-2 text-stroke-hex-aaa op10">
               {getGroupName(data)}
             </span>
           </div>
@@ -125,8 +105,8 @@ function getGroupName(p: InferEntrySchema<'pages'>) {
               rel: data.path?.startsWith('http') ? 'noopener noreferrer' : undefined,
             }}
           >
-            <li class="no-underline" flex="~ col md:row gap-2 md:items-center">
-              <div class="title text-lg leading-1.2em" flex="~ gap-2 wrap">
+            <li class="no-underline flex flex-col md:flex-row gap-2 md:flex-items-center">
+              <div class="title text-lg leading-1.2em flex gap-2 flex-wrap">
                 {isFallback && (
                   <span
                     align-middle
@@ -140,54 +120,29 @@ function getGroupName(p: InferEntrySchema<'pages'>) {
                 <span align-middle>{data.title}</span>
 
                 {data.redirect && (
-                  <span align-middle op50 flex-none text-xs ml--1.5 i-carbon-arrow-up-right title="External" />
+                  <span class="align-middle op50 flex-none text-xs ml--1.5 i-carbon-arrow-up-right" title="External" />
                 )}
               </div>
 
-              <div flex="~ gap-2 items-center">
-                {data.inperson && <span align-middle op50 flex-none i-ri:group-2-line title="In person" />}
+              <div class="flex gap-2 flex-items-center">
+                {data.inperson && <span class="align-middle op50 flex-none i-ri:group-2-line" title="In person" />}
                 {(data.recording || data.video) && (
-                  <span align-middle op50 flex-none i-ri:film-line title="Provided in video" />
+                  <span class="align-middle op50 flex-none i-ri:film-line" title="Provided in video" />
                 )}
-                {data.radio && <span align-middle op50 flex-none i-ri:radio-line title="Provided in radio" />}
-                <span text-sm op50 ws-nowrap>
-                  {formatDate(data.date!, true)}
-                </span>
-                {data.duration && (
-                  <span text-sm op40 ws-nowrap>
-                    {' '}
-                    · {data.duration}
-                  </span>
-                )}
-                {data.platform && (
-                  <span text-sm op40 ws-nowrap>
-                    {' '}
-                    · {data.platform}
-                  </span>
-                )}
-                {data.place && (
-                  <span text-sm op40 ws-nowrap md:hidden>
-                    {' '}
-                    · {data.place}
-                  </span>
-                )}
+                {data.radio && <span class="align-middle op50 flex-none i-ri:radio-line" title="Provided in radio" />}
+                <span class="text-sm op50 ws-nowrap">{formatDate(data.date!, true)}</span>
+                {data.duration && <span class="text-sm op40 ws-nowrap"> · {data.duration}</span>}
+                {data.platform && <span class="text-sm op40 ws-nowrap"> · {data.platform}</span>}
+                {data.place && <span class="text-sm op40 ws-nowrap md:hidden"> · {data.place}</span>}
 
                 {isFallback && (
-                  <span
-                    align-middle
-                    flex-none
-                    class="text-xs bg-zinc:15 text-zinc5 rounded px-1 py-0.5 my-auto md:hidden"
-                  >
+                  <span class="text-xs bg-zinc:15 text-zinc5 rounded px-1 py-0.5 my-auto md:hidden align-middle flex-none">
                     {entryMeta.lang}
                   </span>
                 )}
               </div>
             </li>
-            {data.place && (
-              <div op50 text-sm hidden mt--2 md:block>
-                {data.place}
-              </div>
-            )}
+            {data.place && <div class="op50 text-sm hidden mt--2 md:block">{data.place}</div>}
           </a>
         </div>
       </>

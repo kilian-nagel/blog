@@ -4,7 +4,6 @@ import Default from 'astro-vitesse/components/Head.astro'
 
 // Get the URL of the generated image for the current page using its
 // ID and replace the file extension with `.png`.
-// const ogImageUrl = new URL(`/og/${Astro.props.id.replace(/\.\w+$/, '.png')}`, Astro.site)
 const ogImageUrl = new URL(`/og/${Astro.props.slug ? Astro.props.slug : 'index' + '.png'}`, Astro.site)
 ---
 
