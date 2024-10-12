@@ -123,7 +123,6 @@ export default function VitesseIntegration({
                 light: 'vitesse-light',
               },
               defaultColor: false,
-              wrap: true,
             },
           },
           scopedStyleStrategy: 'where',
