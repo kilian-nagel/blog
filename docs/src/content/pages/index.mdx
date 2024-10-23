@@ -2,11 +2,14 @@
 title: Astro Vitesse
 display: 'Give your pages an elegant touch with Astro Vitesse'
 description: 'Give your pages an elegant touch with Astro Vitesse'
+tocAlwaysOn: true
 ---
 
 import Card from '@/components/Card.astro'
 import SponsorButton from '@/components/SponsorButton.astro'
 import LinkWithIcon from '@/components/LinkWithIcon.astro'
+
+[[toc]]
 
 Everything you need to create a stunning website. Fast, affordable and easy to use.
 
@@ -35,6 +38,92 @@ Astro Vitesse ships as a framework-agnostic, complete solution. Extend with Reac
 </Card>
 
 </div>
+
+## Set up Astro Vitesse
+
+To follow this guide, you’ll need an existing Astro project.
+
+### Add the Astro Vitesse integration
+
+Astro Vitesse is an [Astro integration](https://docs.astro.build/en/guides/integrations-guide/). Add it to your site by running the `astro add` command in your project’s root directory:
+
+```sh
+npx astro add starlight
+```
+
+This will install the required dependencies and add Starlight to the `integrations` array in your Astro config file.
+
+### Configure the integration
+
+The Astro Vitesse integration is configured in your `astro.config.mjs` file.
+
+Add a `title` to get started:
+
+```js
+import { defineConfig } from 'astro'
+import vitesse from 'astro-vitesse'
+
+export default defineConfig({
+  integrations: [
+    vitesse({
+      title: 'My Site',
+    })
+  ]
+})
+```
+
+### Configure UnoCSS
+
+Astro Vitesse uses [UnoCSS](https://unocss.dev/) for styling. To configure UnoCSS, create a `unocss.config.ts` file in your project’s root directory:
+
+```ts
+import { defineConfig } from 'astro-vitesse/theme'
+
+export default defineConfig({})
+```
+
+### Configure content collections
+
+Astro Vitesse is built on top of Astro’s [content collections](https://docs.astro.build/en/guides/content-collections/), which are configured in the `src/content/config.ts` file.
+
+Create or update the content config file, adding a `pages` collection that uses Starlight’s `pagesSchema`:
+
+```ts
+import { defineCollection } from 'astro:content'
+import { pagesSchema } from 'astro-vitesse/schema'
+
+export const collections = {
+  pages: defineCollection({ schema: pagesSchema() }),
+}
+```
+
+### Add content
+
+Astro Vitesse is now configured and it’s time to add some content!
+
+Create a `src/content/pages/` directory and start by adding an `index.md` file.
+This will be the homepage of your new site:
+
+```mdx
+---
+title: Welcome to Astro Vitesse
+description: 'Give your pages an elegant touch with Astro Vitesse'
+---
+
+Welcome to my website!
+```
+
+Astro Vitesse uses file-based routing, which means every Markdown, MDX, or Markdoc file in `src/content/pages/` will turn into a page on your site. Frontmatter metadata (the `title` and `description` fields in the example above) can change how each page is displayed.
+
+## Start the development server
+
+When working locally, [Astro’s development server](https://docs.astro.build/en/reference/cli-reference/#astro-dev) lets you preview your work and automatically refreshes your browser when you make changes.
+
+Inside your project directory, run the following command to start the development server:
+
+```sh
+npm run dev
+```
 
 <div class="flex-auto"></div>
 
