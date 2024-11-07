@@ -48,10 +48,10 @@ To follow this guide, you’ll need an existing Astro project.
 Astro Vitesse is an [Astro integration](https://docs.astro.build/en/guides/integrations-guide/). Add it to your site by running the `astro add` command in your project’s root directory:
 
 ```sh
-npx astro add starlight
+npx astro add astro-vitesse
 ```
 
-This will install the required dependencies and add Starlight to the `integrations` array in your Astro config file.
+This will install the required dependencies and add Astro Vitesse to the `integrations` array in your Astro config file.
 
 ### Configure the integration
 
@@ -86,7 +86,7 @@ export default defineConfig({})
 
 Astro Vitesse is built on top of Astro’s [content collections](https://docs.astro.build/en/guides/content-collections/), which are configured in the `src/content/config.ts` file.
 
-Create or update the content config file, adding a `pages` collection that uses Starlight’s `pagesSchema`:
+Create or update the content config file, adding a `pages` collection that uses Astro Vitesse’s `pagesSchema`:
 
 ```ts
 import { defineCollection } from 'astro:content'
