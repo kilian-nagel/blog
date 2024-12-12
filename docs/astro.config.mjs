@@ -1,6 +1,6 @@
-import { defineConfig } from 'astro/config'
-
 import vitesse from 'astro-vitesse'
+
+import { defineConfig } from 'astro/config'
 import UnoCSS from 'unocss/astro'
 
 // https://astro.build/config
@@ -81,10 +81,10 @@ export default defineConfig({
       //   hideLabel: true,
       // }
       {
-        label: 'Twitter',
-        link: 'https://twitter.com/adrianub',
+        label: 'Bluesky',
+        link: 'https://bsky.app/profile/adrianub.dev',
         hideLabel: true,
-        icon: 'i-ri-twitter-x-fill',
+        icon: 'i-ri-bluesky-line',
         wrapperClass: 'lt-md:hidden',
         attrs: {
           target: '_blank',
