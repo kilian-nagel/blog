@@ -81,10 +81,10 @@ export default defineConfig({
       //   hideLabel: true,
       // }
       {
-        label: 'Bluesky',
-        link: 'https://bsky.app/profile/adrianub.dev',
+        label: 'Twitter',
+        link: 'https://twitter.com/adrianub',
         hideLabel: true,
-        icon: 'i-ri-bluesky-line',
+        icon: 'i-ri-twitter-x-fill',
         wrapperClass: 'lt-md:hidden',
         attrs: {
           target: '_blank',
