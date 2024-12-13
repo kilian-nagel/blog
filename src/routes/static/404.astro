@@ -1,12 +1,19 @@
 ---
-import type { Route, VitessePagesEntry } from '../../utils/routing'
+import {
+  normalizeCollectionEntry,
+  type Route,
+  type VitessePagesCollectionEntry,
+  type VitessePagesEntry,
+} from '../../utils/routing'
 
 import { getEntry } from 'astro:content'
+import project from 'virtual:vitesse/project-context'
 import config from 'virtual:vitesse/user-config'
-import EmptyContent from '../../components/EmptyMarkdown.md'
+
 import { BuiltInDefaultLocale } from '../../utils/i18n'
 import { useTranslations } from '../../utils/translations'
 import CommonPage from '../common.astro'
+import { getCollectionPathFromRoot } from '../../loader'
 
 export const prerender = true
 
@@ -19,7 +26,7 @@ const t = useTranslations(locale)
 
 const fallbackEntry: VitessePagesEntry = {
   slug: '404',
-  id: '404.md' as VitessePagesEntry['id'],
+  id: '404',
   body: '',
   collection: 'pages',
   data: {
@@ -34,15 +41,11 @@ const fallbackEntry: VitessePagesEntry = {
     radio: false,
     video: false,
   },
-  render: async () => ({
-    Content: EmptyContent,
-    headings: [],
-    remarkPluginFrontmatter: {},
-  }),
+  filePath: `${getCollectionPathFromRoot('pages', project)}/404.md`,
 }
 
-const userEntry = await getEntry('pages', '404')
-const entry = userEntry || fallbackEntry
+const userEntry = (await getEntry('pages', '404')) as VitessePagesCollectionEntry
+const entry = userEntry ? normalizeCollectionEntry(userEntry) : fallbackEntry
 const route: Route = { ...entryMeta, entryMeta, entry, id: entry.id, slug: entry.slug }
 ---
 

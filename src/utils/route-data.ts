@@ -1,5 +1,6 @@
 import type { Route } from './routing'
 
+import { render } from 'astro:content'
 import config from 'virtual:vitesse/user-config'
 import { formatPath } from './format-path'
 import { getNavBar, type NavBarEntry } from './navigation'
@@ -45,7 +46,7 @@ export async function generateRouteData({
   const navBar = getNavBar(url.pathname, locale)
   let tocHeading: TocHeading[] = []
 
-  const { remarkPluginFrontmatter: { hasToc = false }, headings } = await entry.render()
+  const { remarkPluginFrontmatter: { hasToc = false }, headings } = await render(entry)
 
   if (hasToc) {
     tocHeading = generateToc(headings, 1, 4)

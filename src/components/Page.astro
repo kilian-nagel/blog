@@ -1,7 +1,7 @@
 ---
 import type { Props } from '../props'
 
-import { ViewTransitions } from 'astro:transitions'
+import { ClientRouter } from 'astro:transitions'
 import Footer from 'virtual:vitesse/components/Footer'
 import config from 'virtual:vitesse/user-config'
 
@@ -53,7 +53,7 @@ import 'virtual:vitesse/user-css'
       })
     </script>
 
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body class="relative text-gray-700 font-sans dark:text-gray-200">
     <Header {...Astro.props} />

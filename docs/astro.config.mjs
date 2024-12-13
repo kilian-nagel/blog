@@ -1,6 +1,7 @@
-import vitesse from 'astro-vitesse'
-
+// @ts-check
 import { defineConfig } from 'astro/config'
+
+import vitesse from 'astro-vitesse'
 import UnoCSS from 'unocss/astro'
 
 // https://astro.build/config

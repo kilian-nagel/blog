@@ -1,6 +1,5 @@
 import type { AstroIntegration, HookParameters } from 'astro'
 import type { UserI18nSchema } from './translations'
-import { AstroError } from 'astro/errors'
 import { z } from 'astro/zod'
 import { parseWithFriendlyErrors } from '../utils/error-map'
 import { VitesseConfigSchema, type VitesseUserConfig } from '../utils/user-config'
@@ -224,14 +223,6 @@ export async function runPlugins(
         }
       },
     })
-  }
-
-  if (context.config.output === 'static' && !vitesseConfig.prerender) {
-    throw new AstroError(
-      'Vitesse’s `prerender: false` option requires `output: "hybrid"` or `"server"` in your Astro config.',
-      'Either set `output` in your Astro config or set `prerender: true` in the Vitesse options.\n\n'
-      + 'Learn more about rendering modes in the Astro docs: https://docs.astro.build/en/basics/rendering-modes/',
-    )
   }
 
   return { integrations, vitesseConfig, pluginTranslations }

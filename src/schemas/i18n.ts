@@ -56,6 +56,7 @@ export function builtinI18nSchema() {
   return vitesseI18nSchema()
     .required()
     .strict()
+    .merge(expressiveCodeI18nSchema())
 }
 
 function vitesseI18nSchema() {
@@ -90,6 +91,24 @@ function vitesseI18nSchema() {
         ),
 
       'comment.on': z.string().describe('Label for the comment section'),
+    })
+    .partial()
+}
+
+function expressiveCodeI18nSchema() {
+  return z
+    .object({
+      'expressiveCode.copyButtonCopied': z
+        .string()
+        .describe('Expressive Code UI translation. English default value: `"Copied!"`'),
+
+      'expressiveCode.copyButtonTooltip': z
+        .string()
+        .describe('Expressive Code UI translation. English default value: `"Copy to clipboard"`'),
+
+      'expressiveCode.terminalWindowFallbackTitle': z
+        .string()
+        .describe('Expressive Code UI translation. English default value: `"Terminal window"`'),
     })
     .partial()
 }

@@ -16,14 +16,15 @@ export default defineConfig({
         'src/props.ts',
         // Main integration entrypoint — don’t think we’re able to test this directly currently.
         'src/index.ts',
+        // Since Vitest 2.1.2, coverage is collected for `*.astro` files.
+        '**/*.astro',
       ],
-      // TODO: Uncomment when we have a stable coverage threshold.
+      // TODO: Uncomment when we have better coverage.
       // thresholds: {
-      //   autoUpdate: true,
-      //   lines: 89.28,
-      //   functions: 92.78,
-      //   branches: 92.83,
-      //   statements: 89.28,
+      //   lines: 87,
+      //   functions: 90,
+      //   branches: 90,
+      //   statements: 87,
       // },
     },
   },

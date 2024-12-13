@@ -6,6 +6,7 @@ declare module 'virtual:vitesse/project-context' {
     build: {
       format: import('astro').AstroConfig['build']['format']
     }
+    legacyCollections: boolean
   }
   export default ProjectContext
 }

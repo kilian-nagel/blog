@@ -14,6 +14,7 @@ import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 import mdx from '@astrojs/mdx'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
+import { vitesseExpressiveCode } from './integrations/expressive-code'
 import { vitesseSitemap } from './integrations/sitemap'
 import { vitePluginVitesseUserConfig } from './integrations/virtual-user-config'
 import { rehypeToc } from './plugins/rehype-toc'
@@ -47,7 +48,7 @@ export default function VitesseIntegration({
         pluginTranslations = pluginResult.pluginTranslations
 
         // TODO: is required to use translations in the future
-        // eslint-disable-next-line unused-imports/no-unused-vars
+
         const useTranslations = createTranslationSystemFromFs(
           vitesseConfig,
           config,
@@ -77,6 +78,9 @@ export default function VitesseIntegration({
         // Add built-in integrations only if they are not already added by the user through the
         // config or by a plugin.
         const allIntegrations = [...config.integrations, ...integrations]
+        if (!allIntegrations.find(({ name }) => name === 'astro-expressive-code')) {
+          integrations.push(...vitesseExpressiveCode({ vitesseConfig, useTranslations }))
+        }
         if (!allIntegrations.find(({ name }) => name === '@astrojs/sitemap')) {
           integrations.push(vitesseSitemap(vitesseConfig))
         }
@@ -117,20 +121,13 @@ export default function VitesseIntegration({
                 },
               ],
             ],
-            shikiConfig: {
-              themes: {
-                dark: 'vitesse-dark',
-                light: 'vitesse-light',
-              },
-              defaultColor: false,
-            },
+            shikiConfig:
+              // Configure Shiki theme if the user is using the default github-dark theme.
+              config.markdown.shikiConfig.theme !== 'github-dark' ? {} : { theme: 'css-variables' },
           },
           scopedStyleStrategy: 'where',
           // If not already configured, default to prefetching all links on hover.
           prefetch: config.prefetch ?? { prefetchAll: true },
-          experimental: {
-            globalRoutePriority: true,
-          },
           i18n: astroI18nConfig,
         })
       },

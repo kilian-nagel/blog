@@ -3,8 +3,12 @@ import type { VitessePagesEntry } from './routing'
 import type { TocHeading } from './toc'
 import type { Prettify, RemoveIndexSignature } from './types'
 import type { VitesseConfig, VitesseUserConfig } from './user-config'
+
 import { z } from 'astro/zod'
+
+import project from 'virtual:vitesse/project-context'
 import config from 'virtual:vitesse/user-config'
+import { getCollectionPathFromRoot } from '../loader'
 import { pagesSchema } from '../schema'
 import { NavBarItemSchema } from '../schemas/navbar'
 import { parseAsyncWithFriendlyErrors, parseWithFriendlyErrors } from './error-map'
@@ -80,11 +84,11 @@ function validateNavBarProp(navBarProp: VitesseUserConfig['navBar']): VitesseCon
 export type VitessePageProps = Prettify<
   // Remove the index signature from `Route`, omit undesired properties and make the rest optional.
   Partial<Omit<RemoveIndexSignature<PageProps>, 'entry' | 'entryMeta' | 'id' | 'locale' | 'slug'>> &
-  // Add the sidebar definitions for a Starlight page.
+  // Add the sidebar definitions for a Vitesse page.
   Partial<Pick<VitesseRouteData, 'hasToc'>> & {
     navBar?: VitesseUserConfig['navBar']
     headings?: TocHeading[]
-    // And finally add the Starlight page frontmatter properties in a `frontmatter` property.
+    // And finally add the Vitesse page frontmatter properties in a `frontmatter` property.
     frontmatter: VitessePageFrontmatter
   }
 >
@@ -96,8 +100,8 @@ export type VitessePageProps = Prettify<
  */
 type VitessePagePagesEntry = Omit<VitessePagesEntry, 'id' | 'render'> & {
   /**
-   * The unique ID for this Vitesse page which cannot be inferred from codegen like content
-   * collection entries.
+   * The unique ID if using the `legacy.collections` for this Vitesse page which cannot be
+   * inferred from codegen like content collection entries or the slug.
    */
   id: string
 }
@@ -112,7 +116,7 @@ export async function generateVitessePageRouteData({
   const { isFallback, frontmatter, ...routeProps } = props
   const slug = urlToSlug(url)
   const pageFrontmatter = await getVitessePageFrontmatter(frontmatter)
-  const id = `${stripLeadingAndTrailingSlashes(slug)}.md`
+  const id = project.legacyCollections ? `${stripLeadingAndTrailingSlashes(slug)}.md` : slug
   const localeData = slugToLocaleData(slug)
   const navBar = getNavbarFromConfig(
     props.navBar ? validateNavBarProp(props.navBar) : config.navBar,
@@ -124,6 +128,7 @@ export async function generateVitessePageRouteData({
     slug,
     body: '',
     collection: 'pages',
+    filePath: `${getCollectionPathFromRoot('pages', project)}/${stripLeadingAndTrailingSlashes(slug)}.md`,
     data: {
       ...pageFrontmatter,
     },

@@ -1,10 +1,13 @@
 /// <reference types="vitest" />
 
 import type { AstroConfig } from 'astro'
+import process from 'node:process'
 import { getViteConfig } from 'astro/config'
 import { vitePluginVitesseUserConfig } from '../src/integrations/virtual-user-config'
 import { runPlugins, type VitesseUserConfigWithPlugins } from '../src/utils/plugins'
 import { createTestPluginContext } from './test-plugin-utils'
+
+const testLegacyCollections = process.env.LEGACY_COLLECTIONS === 'true'
 
 // eslint-disable-next-line ts/explicit-function-return-type
 export async function defineVitestConfig(
@@ -34,6 +37,7 @@ export async function defineVitestConfig(
           srcDir,
           build,
           trailingSlash,
+          legacy: { collections: testLegacyCollections },
         },
         pluginTranslations,
       ),
