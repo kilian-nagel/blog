@@ -4,5 +4,6 @@
     "jsx": "preserve",
     "checkJs": true
   },
-  "exclude": ["**/dist/**", "**/coverage/**"]
+  "include": ["docs/.astro/types.d.ts", "**/*"],
+  "exclude": ["**/dist/**", "**/coverage/**", "**/build/**"]
 }
