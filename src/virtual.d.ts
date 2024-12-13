@@ -1,5 +1,5 @@
 declare module 'virtual:vitesse/user-config' {
-  const Config: import('./utils/user-config').VitesseConfig
+  const Config: import('./types').VitesseConfig
   export default Config
 }
 

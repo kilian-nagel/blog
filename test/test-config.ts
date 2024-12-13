@@ -42,6 +42,7 @@ export async function defineVitestConfig(
         pluginTranslations,
       ),
     ],
+    // @ts-expect-error - `getViteConfig` expects a Vite config, but we're passing an Astro config
     test: {
       snapshotSerializers: ['./snapshot-serializer-astro-error.ts'],
     },
