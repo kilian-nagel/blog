@@ -30,7 +30,7 @@
     "./props": "./src/props.ts",
     "./routes/*": "./src/routes/*",
     "./components/*": "./src/components/*",
-    "./loader": "./src/loader.ts",
+    "./loaders": "./src/loaders.ts",
     "./internal": "./src/internal.ts",
     "./types": "./src/types.ts",
     "./expressive-code": {

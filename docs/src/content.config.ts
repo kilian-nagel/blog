@@ -1,5 +1,5 @@
 import { defineCollection, z } from 'astro:content'
-import { i18nLoader, pagesLoader } from 'astro-vitesse/loader'
+import { i18nLoader, pagesLoader } from 'astro-vitesse/loaders'
 import { i18nSchema, pagesSchema } from 'astro-vitesse/schema'
 
 export const collections = {

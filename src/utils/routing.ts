@@ -3,7 +3,7 @@ import { type CollectionEntry, getCollection } from 'astro:content'
 
 import project from 'virtual:vitesse/project-context'
 import config from 'virtual:vitesse/user-config'
-import { getCollectionPathFromRoot } from '../loader'
+import { getCollectionPathFromRoot } from '../loaders'
 import { BuiltInDefaultLocale } from './i18n'
 import {
   type LocaleData,

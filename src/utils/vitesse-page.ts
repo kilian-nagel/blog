@@ -8,7 +8,7 @@ import { z } from 'astro/zod'
 
 import project from 'virtual:vitesse/project-context'
 import config from 'virtual:vitesse/user-config'
-import { getCollectionPathFromRoot } from '../loader'
+import { getCollectionPathFromRoot } from '../loaders'
 import { pagesSchema } from '../schema'
 import { NavBarItemSchema } from '../schemas/navbar'
 import { parseAsyncWithFriendlyErrors, parseWithFriendlyErrors } from './error-map'
