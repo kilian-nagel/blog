@@ -10,12 +10,12 @@ export default defineConfig({
   integrations: [
     UnoCSS(),
     vitesse({
-      title: 'UB',
+      title: 'Astro Vitesse',
       credits: true,
       logo: {
         light: '/src/assets/logo-light.svg',
         dark: '/src/assets/logo-dark.svg',
-        alt: 'UB Logo',
+        alt: 'Astro Vitesse Logo',
       },
       defaultLocale: 'root',
       locales: {
