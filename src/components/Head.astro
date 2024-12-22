@@ -50,6 +50,28 @@ const headDefaults: z.input<ReturnType<typeof HeadConfigSchema>> = [
   },
 ]
 
+const image = data.image
+  ? new URL(data.image.src, Astro.site).href
+  : new URL((entry.id === 'index' ? '' : entry.id) + '/og.png', Astro.site).href
+
+if (image) {
+  headDefaults.push({
+    tag: 'meta',
+    attrs: {
+      property: 'og:image',
+      content: image,
+    },
+  })
+
+  headDefaults.push({
+    tag: 'meta',
+    attrs: {
+      property: 'twitter:image',
+      content: image,
+    },
+  })
+}
+
 if (description) {
   headDefaults.push({
     tag: 'meta',

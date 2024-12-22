@@ -6,7 +6,7 @@ import UnoCSS from 'unocss/astro'
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://adrianub.dev',
+  site: 'https://astro-vitesse.vercel.app',
   integrations: [
     UnoCSS(),
     vitesse({
@@ -30,7 +30,6 @@ export default defineConfig({
       },
       components: {
         Footer: '/src/components/Footer.astro',
-        Head: '/src/components/Head.astro',
       },
       social: {
         twitter: 'https://twitter.com/adrianub',
