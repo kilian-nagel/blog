@@ -3,6 +3,7 @@ import type { Route } from '../utils/routing'
 
 import { Buffer } from 'node:buffer'
 import { readFileSync } from 'node:fs'
+import process from 'node:process'
 import satori, { type SatoriOptions } from 'satori'
 import { html } from 'satori-html'
 import sharp from 'sharp'
@@ -26,10 +27,13 @@ const satoriOptions: SatoriOptions = {
 
 const defaultLang = config.defaultLocale.lang as string
 
-const logo = (logos.dark || logos.light)?.src.replace('/@fs/', '/').split('?')[0]
+const logo = logos.dark || logos.light
 
-// read logo file and convert to base64 string
-const logoBase64 = logo ? readFileSync(logo, { encoding: 'base64' }) : ''
+const logoSrc = process.env.NODE_ENV === 'development'
+  ? logo.src.replace(/\?.*/, '').replace('/@fs', '')
+  : logo.src.replace('/', 'dist/')
+
+const logoBase64 = readFileSync(logoSrc, { encoding: 'base64' })
 
 export async function generateOGImageMarkup(props: Route) {
   const lines = props.entry.data.title.split(/(.{0,30})(?:\s|$)/g).filter(Boolean)
