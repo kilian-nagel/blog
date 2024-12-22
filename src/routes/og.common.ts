@@ -31,7 +31,7 @@ const logo = logos.dark || logos.light
 
 const logoSrc = logo
   ? process.env.NODE_ENV === 'development'
-    ? (logo.src.replace(/\?.*/, '').replace('/@fs', ''))
+    ? (logo.src.replace(/\?.*/, '').replace('/@fs', '')).split('?')[0]
     : (logo.src.replace('/', 'dist/'))
   : ''
 
@@ -53,11 +53,10 @@ export async function generateOGImageMarkup(props: Route) {
     />
     <div tw="flex items-center justify-start w-full px-18" style="gap: 20px">
       <div tw="self-start flex justify-center items-center">
-        ${logo && `<img
+        <img
           tw="w-28 h-28"
-          src="data:image/${logo.format};base64,${logoBase64}"
-          alt="logo"
-        />`}
+          src="data:image/${logo?.format === 'svg' ? 'svg+xml' : logo?.format};base64,${logoBase64}"
+        />
       </div>
 
       <div tw="flex flex-col" style="gap: 10px">
