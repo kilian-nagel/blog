@@ -8,7 +8,7 @@ const { siteTitle, siteTitleHref } = Astro.props
 ---
 
 <a
-  class="absolute m-5 h-12 w-12 flex select-none items-center gap-x-1 outline-none xl:fixed"
+  class="absolute m-5 flex select-none items-center gap-x-1 outline-none xl:fixed"
   href={siteTitleHref}
   aria-label="Home"
 >
@@ -16,7 +16,7 @@ const { siteTitle, siteTitleHref } = Astro.props
     config.logo && logos.dark && (
       <>
         <img
-          class:list={{ 'hidden dark:inline-block': !('src' in config.logo) }}
+          class:list={{ 'hidden dark:inline-block': !('src' in config.logo), 'h-12 w-12': true }}
           alt={config.logo.alt}
           src={logos.dark.src}
           width={logos.dark.width}
@@ -25,7 +25,7 @@ const { siteTitle, siteTitleHref } = Astro.props
         {/* Show light alternate if a user configure both light and dark logos. */}
         {!('src' in config.logo) && (
           <img
-            class="inline-block dark:hidden"
+            class="inline-block dark:hidden h-12 w-12"
             alt={config.logo.alt}
             src={logos.light?.src}
             width={logos.light?.width}
