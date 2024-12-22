@@ -72,7 +72,7 @@ function getGroupName(p: InferEntrySchema<'pages'>) {
 ---
 
 <ul>
-  {!pages.length && <div class="py2 op50">{'{ nothing here yet }'}</div>}
+  {!pages.length && <div class="py2 op50">{Astro.locals.t('posts.empty')}</div>}
 
   {
     pages.map(({ entry: { data }, isFallback, entryMeta }, idx) => (

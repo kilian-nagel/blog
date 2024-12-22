@@ -91,6 +91,7 @@ function vitesseI18nSchema() {
         ),
 
       'comment.on': z.string().describe('Label for the comment section'),
+      'posts.empty': z.string().describe('Text shown when there are no posts to display'),
     })
     .partial()
 }
