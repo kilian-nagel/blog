@@ -97,7 +97,7 @@ if (config.social?.mastodon) {
       )}
       <br />
       <span class="font-mono op50">&gt; </span>
-      <a href={Astro.url.pathname.split('/').slice(0, -1).join('/') || '/'} class="font-mono op50 hover:op75">
+      <a href={Astro.url.pathname.split('/').slice(0, -2).join('/') || '/'} class="font-mono op50 hover:op75">
         cd ..
       </a>
     </div>
