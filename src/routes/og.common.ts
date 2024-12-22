@@ -29,9 +29,11 @@ const defaultLang = config.defaultLocale.lang as string
 
 const logo = logos.dark || logos.light
 
-const logoSrc = process.env.NODE_ENV === 'development'
-  ? logo.src.replace(/\?.*/, '').replace('/@fs', '')
-  : logo.src.replace('/', 'dist/')
+const logoSrc = logo
+  ? process.env.NODE_ENV === 'development'
+    ? (logo.src.replace(/\?.*/, '').replace('/@fs', ''))
+    : (logo.src.replace('/', 'dist/'))
+  : ''
 
 const logoBase64 = readFileSync(logoSrc, { encoding: 'base64' })
 
@@ -51,11 +53,11 @@ export async function generateOGImageMarkup(props: Route) {
     />
     <div tw="flex items-center justify-start w-full px-18" style="gap: 20px">
       <div tw="self-start flex justify-center items-center">
-        <img
+        ${logo && `<img
           tw="w-28 h-28"
-          src="data:image/svg+xml;base64,${logoBase64}"
+          src="data:image/${logo.format};base64,${logoBase64}"
           alt="logo"
-        />
+        />`}
       </div>
 
       <div tw="flex flex-col" style="gap: 10px">
