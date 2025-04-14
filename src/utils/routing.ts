@@ -22,7 +22,7 @@ validateLogoImports()
 // using a loader. This type is a common subset of both types.
 export type VitessePagesCollectionEntry = Omit<
   CollectionEntry<'pages'>,
-  'id' | 'filePath' | 'render' | 'slug'
+    'id' | 'filePath' | 'render' | 'slug'
 > & {
   // Update the `id` property to be a string like in the loader type.
   id: string
@@ -74,12 +74,53 @@ export function normalizeCollectionEntry(entry: VitessePagesCollectionEntry): Vi
   }
 }
 
+const query = {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    query: `
+      {
+          posts {
+            id
+            title
+            dates
+            content {
+                html
+            }
+        }
+      }`,
+  }),
+}
+
 /** All entries in the pages content collection. */
 const pages: VitessePagesEntry[] = (
-  // eslint-disable-next-line antfu/no-top-level-await
+// eslint-disable-next-line antfu/no-top-level-await
   (await getCollection('pages', ({ data }): boolean => {
     // In production, filter out drafts.
     return import.meta.env.MODE !== 'production' || data.draft === false
+  }).then(async (data) => {
+    // Fetch posts from hygraph endpoint
+    const response = await fetch(import.meta.env.VITE_HYGRAPH_ENDPOINT, query)
+    const posts = await response.json()
+
+    const post_entries = posts.data
+    const page_posts_data = []
+
+    // Build page entries from posts data.
+    for (const post of post_entries.posts) {
+      const page_post = {
+        id: post.id,
+        data: {
+          title: post.title,
+          date: post.dates,
+          draft: false,
+        },
+        body: post.content,
+        collection: 'pages',
+      }
+      page_posts_data.push(page_post)
+    }
+    return data.concat(page_posts_data)
   })) ?? []
 ).map(normalizeCollectionEntry)
 
@@ -144,10 +185,12 @@ export function getRouteBySlugParam(slugParam: string | undefined): Route | unde
 }
 
 function getPaths(): Path[] {
-  return routes.map(route => ({
-    params: { slug: slugToParam(route.slug) },
-    props: route,
-  }))
+  return routes.map((route) => {
+    return ({
+      params: { slug: slugToParam(route.slug) },
+      props: route,
+    })
+  })
 }
 export const paths = getPaths()
 
@@ -161,7 +204,7 @@ export function getLocaleRoutes(locale: string | undefined): Route[] {
 
 /**
  * Get all entries in the pages content collection for a specific locale.
- * A locale of `undefined` is treated as the “root” locale, if configured.
+ * A locale of `undefined` is treated as te “root” locale, if configured.
  */
 function getLocalePages(locale: string | undefined): VitessePagesEntry[] {
   return filterByLocale(pages, locale)

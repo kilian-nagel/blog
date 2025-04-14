@@ -119,7 +119,7 @@ if (config.social?.twitter) {
   })
 }
 
-const head = createHead(headDefaults, config.head, data.head)
+const head = createHead(headDefaults, config.head, data.head ?? [])
 ---
 
 {head.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}
