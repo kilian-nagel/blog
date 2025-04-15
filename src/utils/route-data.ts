@@ -46,15 +46,24 @@ export async function generateRouteData({
   const navBar = getNavBar(url.pathname, locale)
   let tocHeading: TocHeading[] = []
 
-  const { remarkPluginFrontmatter: { hasToc = false }, headings } = await render(entry)
+  const entry2 = entry
+  if (entry.collection === 'hygraph') {
+    entry2.filePath = undefined
+  }
+
+  const { remarkPluginFrontmatter: { hasToc = false }, headings } = await render(entry2)
 
   if (hasToc) {
     tocHeading = generateToc(headings, 1, 4)
   }
 
   const siteTitle = getSiteTitle(lang)
+  const props2 = props
+  if (!props2.entry.rendered)
+    props2.entry.rendered = { html: props2?.entry.body }
+
   return {
-    ...props,
+    ...props2,
     siteTitle,
     navBar,
     siteTitleHref: getSiteTitleHref(locale),

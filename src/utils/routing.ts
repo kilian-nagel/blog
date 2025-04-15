@@ -3,7 +3,7 @@ import { type CollectionEntry, getCollection } from 'astro:content'
 
 import project from 'virtual:vitesse/project-context'
 import config from 'virtual:vitesse/user-config'
-import { getCollectionPathFromRoot } from '../loaders'
+import { getCollectionPathFromRoot, hygraph_loader } from '../loaders'
 import { BuiltInDefaultLocale } from './i18n'
 import {
   type LocaleData,
@@ -74,24 +74,6 @@ export function normalizeCollectionEntry(entry: VitessePagesCollectionEntry): Vi
   }
 }
 
-const query = {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    query: `
-      {
-          posts {
-            id
-            title
-            dates
-            content {
-                html
-            }
-        }
-      }`,
-  }),
-}
-
 /** All entries in the pages content collection. */
 const pages: VitessePagesEntry[] = (
 // eslint-disable-next-line antfu/no-top-level-await
@@ -99,24 +81,20 @@ const pages: VitessePagesEntry[] = (
     // In production, filter out drafts.
     return import.meta.env.MODE !== 'production' || data.draft === false
   }).then(async (data) => {
-    // Fetch posts from hygraph endpoint
-    const response = await fetch(import.meta.env.VITE_HYGRAPH_ENDPOINT, query)
-    const posts = await response.json()
-
-    const post_entries = posts.data
+    const post_entries = await hygraph_loader().load()
     const page_posts_data = []
 
     // Build page entries from posts data.
-    for (const post of post_entries.posts) {
+    for (const post of post_entries) {
       const page_post = {
-        id: post.id,
+        id: `posts/${post.id}`,
         data: {
-          title: post.title,
-          date: post.dates,
+          title: post?.title,
+          date: post?.dates,
           draft: false,
         },
-        body: post.content,
-        collection: 'pages',
+        body: post?.content?.html,
+        collection: 'hygraph',
       }
       page_posts_data.push(page_post)
     }
@@ -192,6 +170,7 @@ function getPaths(): Path[] {
     })
   })
 }
+
 export const paths = getPaths()
 
 /**

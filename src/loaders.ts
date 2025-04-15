@@ -11,6 +11,24 @@ type VitesseCollection = (typeof collectionNames)[number]
 const pagesExtensions = ['markdown', 'mdown', 'mkdn', 'mkd', 'mdwn', 'md', 'mdx']
 const i18nExtensions = ['json', 'yml', 'yaml']
 
+const query = {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    query: `
+      {
+          posts {
+            id
+            title
+            dates
+            content {
+                html
+            }
+        }
+      }`,
+  }),
+}
+
 export function pagesLoader(): Loader {
   return {
     name: 'vitesse-pages-loader',
@@ -22,6 +40,17 @@ export function i18nLoader(): Loader {
   return {
     name: 'vitesse-i18n-loader',
     load: createGlobLoadFn('i18n'),
+  }
+}
+
+export function hygraph_loader(): Loader {
+  return {
+    name: 'hygraph-loader',
+    load: async () => {
+      const response = await fetch(import.meta.env.VITE_HYGRAPH_ENDPOINT, query)
+      const posts = await response.json()
+      return posts?.data?.posts
+    },
   }
 }
 
