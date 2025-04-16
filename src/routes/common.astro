@@ -18,7 +18,7 @@ const routeData = await generateRouteData({ props: { ...route, headings }, url: 
 
 <Page {...routeData}>
   {
-    routeData.entry.filePath ? (
+    routeData.entry.collection === 'pages' ? (
       <Content frontmatter={routeData.entry.data} />
     ) : (
       <Markup content={routeData.entry.body} />
