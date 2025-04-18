@@ -5,5 +5,8 @@
     "checkJs": true
   },
   "include": ["docs/.astro/types.d.ts", "**/*"],
+  "paths": {
+        "@/*":"src/*"
+  },
   "exclude": ["**/dist/**", "**/coverage/**", "**/build/**"]
 }
