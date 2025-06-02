@@ -3,7 +3,7 @@ import { type CollectionEntry, getCollection } from 'astro:content'
 
 import project from 'virtual:vitesse/project-context'
 import config from 'virtual:vitesse/user-config'
-import { getCollectionPathFromRoot, hygraph_loader } from '../loaders'
+import { getCollectionPathFromRoot, PostsLoader } from '../loaders'
 import { BuiltInDefaultLocale } from './i18n'
 import {
   type LocaleData,
@@ -22,7 +22,7 @@ validateLogoImports()
 // using a loader. This type is a common subset of both types.
 export type VitessePagesCollectionEntry = Omit<
   CollectionEntry<'pages'>,
-    'id' | 'filePath' | 'render' | 'slug'
+  'id' | 'filePath' | 'render' | 'slug'
 > & {
   // Update the `id` property to be a string like in the loader type.
   id: string
@@ -61,14 +61,20 @@ interface Path extends GetStaticPathsItem {
  * `index` is stripped, but in the root of a collection, we get a slug of `index`.
  * We map that to an empty string for consistent behaviour.
  */
-const normalizeIndexSlug = (slug: string): string => (slug === 'index' ? '' : slug)
+function normalizeIndexSlug(slug: string): string {
+  return slug === 'index' ? '' : slug
+}
 
 /** Normalize the different collection entry we can get from a legacy collection or a loader. */
-export function normalizeCollectionEntry(entry: VitessePagesCollectionEntry): VitessePagesEntry {
+export function normalizeCollectionEntry(
+  entry: VitessePagesCollectionEntry,
+): VitessePagesEntry {
   return {
     ...entry,
     // In a legacy collection, the `filePath` property doesn't exist.
-    filePath: entry.filePath ?? `${getCollectionPathFromRoot('pages', project)}/${entry.id}`,
+    filePath:
+      entry.filePath
+      ?? `${getCollectionPathFromRoot('pages', project)}/${entry.id}`,
     // In a collection with a loader, the `slug` property is replaced by the `id`.
     slug: normalizeIndexSlug(entry.slug ?? entry.id),
   }
@@ -76,12 +82,11 @@ export function normalizeCollectionEntry(entry: VitessePagesCollectionEntry): Vi
 
 /** All entries in the pages content collection. */
 const pages: VitessePagesEntry[] = (
-// eslint-disable-next-line antfu/no-top-level-await
   (await getCollection('pages', ({ data }): boolean => {
     // In production, filter out drafts.
     return import.meta.env.MODE !== 'production' || data.draft === false
   }).then(async (data) => {
-    const post_entries = await hygraph_loader().load()
+    const post_entries = await PostsLoader().load()
     const page_posts_data = []
 
     // Build page entries from posts data.
@@ -115,7 +120,9 @@ function getRoutes(): Route[] {
   if (config.isMultilingual) {
     /** Entries in the pages content collection for the default locale. */
     const defaultLocalePages = getLocalePages(
-      config.defaultLocale?.locale === 'root' ? undefined : config.defaultLocale?.locale,
+      config.defaultLocale?.locale === 'root'
+        ? undefined
+        : config.defaultLocale?.locale,
     )
     for (const key in config.locales) {
       if (key === config.defaultLocale.locale)
@@ -127,8 +134,12 @@ function getRoutes(): Route[] {
       const localePages = getLocalePages(locale)
       for (const fallback of defaultLocalePages) {
         const slug = localizedSlug(fallback.slug, locale)
-        const id = project.legacyCollections ? localizedId(fallback.id, locale) : slug
-        const doesNotNeedFallback = localePages.some(doc => doc.slug === slug)
+        const id = project.legacyCollections
+          ? localizedId(fallback.id, locale)
+          : slug
+        const doesNotNeedFallback = localePages.some(
+          doc => doc.slug === slug,
+        )
         if (doesNotNeedFallback)
           continue
         routes.push({
@@ -158,16 +169,18 @@ function getParamRouteMapping(): ReadonlyMap<string | undefined, Route> {
 }
 const routesBySlugParam = getParamRouteMapping()
 
-export function getRouteBySlugParam(slugParam: string | undefined): Route | undefined {
+export function getRouteBySlugParam(
+  slugParam: string | undefined,
+): Route | undefined {
   return routesBySlugParam.get(slugParam?.replace(/\/$/, '') || undefined)
 }
 
 function getPaths(): Path[] {
   return routes.map((route) => {
-    return ({
+    return {
       params: { slug: slugToParam(route.slug) },
       props: route,
-    })
+    }
   })
 }
 
@@ -190,16 +203,23 @@ function getLocalePages(locale: string | undefined): VitessePagesEntry[] {
 }
 
 /** Filter an array to find items whose slug matches the passed locale. */
-function filterByLocale<T extends { slug: string }>(items: T[], locale: string | undefined): T[] {
+function filterByLocale<T extends { slug: string }>(
+  items: T[],
+  locale: string | undefined,
+): T[] {
   if (config.locales) {
     if (locale && locale in config.locales) {
-      return items.filter(i => i.slug === locale || i.slug.startsWith(`${locale}/`))
+      return items.filter(
+        i => i.slug === locale || i.slug.startsWith(`${locale}/`),
+      )
     }
     else if (config.locales.root) {
       const langKeys = Object.keys(config.locales).filter(k => k !== 'root')
       const isLangIndex = new RegExp(`^(${langKeys.join('|')})$`)
       const isLangDir = new RegExp(`^(${langKeys.join('|')})/`)
-      return items.filter(i => !isLangIndex.test(i.slug) && !isLangDir.test(i.slug))
+      return items.filter(
+        i => !isLangIndex.test(i.slug) && !isLangDir.test(i.slug),
+      )
     }
   }
   return items

@@ -1,18 +1,19 @@
 // @ts-check
 import antfu from '@antfu/eslint-config'
 
-export default antfu(
-  {
-    type: 'lib',
+export default antfu({
+  type: 'lib',
+  astro: true,
+  unocss: true,
+  markdown: true,
+  formatters: {
     astro: true,
-    unocss: true,
+    css: true,
+    html: true,
     markdown: true,
-    formatters: {
-      astro: true,
-      css: true,
-      html: true,
-      markdown: true,
-      svg: true,
-    },
+    svg: true,
   },
-)
+  rules: {
+    'antfu/no-top-level-await': 'off',
+  },
+})

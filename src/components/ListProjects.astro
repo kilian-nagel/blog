@@ -1,4 +1,7 @@
 ---
+import { ProjectsLoader } from 'astro-vitesse/loaders'
+import { convert_hygraph_projects_to_format } from 'astro-vitesse/utils/format-data.ts'
+
 export interface Props {
   projects: Record<
     string,
@@ -11,16 +14,18 @@ export interface Props {
   >
 }
 
+const projects = await ProjectsLoader().load()
+const projects_formatted = convert_hygraph_projects_to_format(projects)
+console.log(projects_formatted)
+
 function slug(name: string): string {
   return name.toLowerCase().replace(/[\s\\/]+/g, '-')
 }
-
-const { projects } = Astro.props
 ---
 
 <div class="mx-auto max-w-300">
   {
-    Object.keys(projects).map((key, cidx) => (
+    Object.keys(projects_formatted).map((key, cidx) => (
       <div slide-enter style={{ '--enter-stage': cidx + 1 }}>
         <div
           id={slug(key)}
@@ -33,7 +38,7 @@ const { projects } = Astro.props
         </div>
 
         <div class="project-grid mx-auto max-w-500 w-max py-2 grid grid-cols-1 md:grid-cols-2 gap-4 lg:grid-cols-3">
-          {projects[key].map((item) => (
+          {projects_formatted[key].map((item) => (
             <a href={item.link} target="_blank" class="item relative flex items-center" title={item.name}>
               <div class="pr-5 pt-2">
                 <div v-else class:list={['text-3xl opacity-50', item.icon || 'i-carbon-campsite']} />
@@ -58,7 +63,7 @@ const { projects } = Astro.props
     </div>
     <ul>
       {
-        Object.keys(projects).map((key) => (
+        Object.keys(projects_formatted).map((key) => (
           <li>
             <a href={`#${slug(key)}`}>{key}</a>
           </li>

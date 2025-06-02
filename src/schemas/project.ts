@@ -1,23 +1,25 @@
-import { z } from "astro/zod";
+import type { ZodSchema } from 'astro/zod'
+import { z } from 'astro/zod'
 
-// eslint-disable-next-line ts/explicit-function-return-type
-export function ProjectSchemas() {
+export function ProjectSchemas(): ZodSchema {
   return z.object({
+    id: z.string(),
     title: z.string(),
-    content: z.string(),
+    content: z.object({
+      html: z.string(),
+    }),
     excerpt: z.string(),
+    isCompleted: z.boolean().nullable(),
     dates: z.string(),
-    typeOfProject: z.string().optional(),
-    typeOfApplication: z.string().optional(),
     coverImage: z.string().optional(),
-    slug: z.string().optional(),
+    slug: z.string().optional().nullable(),
     tags: z.array(z.string()).optional(),
-  });
+  })
 }
 
-export function ProjectsSchemas() {
-  return z.array(ProjectSchemas());
+export function ProjectsSchemas(): ZodSchema {
+  return z.array(ProjectSchemas())
 }
 
-export type ProjectSchemaInput = z.input<ReturnType<typeof ProjectSchema>>;
-export type ProjectSchemaOutput = z.output<ReturnType<typeof ProjectSchema>>;
+export type ProjectSchemaOutput = z.output<ReturnType<typeof ProjectSchemas>>
+export type ProjectsSchemaOutput = z.output<ReturnType<typeof ProjectsSchemas>>
